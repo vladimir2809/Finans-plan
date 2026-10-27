@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="script.js"></script>
+    <title>Document</title>
+    <style>
+        body{
+            min-height: 1500px;
+            padding-bottom: 50px;
+        }
+        #tableIncome{
+            position: absolute;
+            left: 50px;
+            top: 30px;
+            border-collapse: collapse;
+        }
+        #tableActives{
+            position: absolute;
+            left: 250px;
+            top: 30px;
+            border-collapse: collapse;
+        }
+        #tableByTime{
+            position: absolute;
+            top: 300px;
+            /* padding-bottom: 180px; */
+            border-collapse: collapse;
+            
+        }
+        th{
+            padding: 2px;
+            border: 1px solid black;
+            font-size: 12px;
+        }
+        #actives{
+            min-width: 200px;
+        }
+        #nameSpending{
+            min-width: 80px;
+        }
+        td{
+            font-size: 12px;
+            padding: 5px;
+            border: 1px solid black;
+        }
+        .capital{
+            background-color: #ffff00;
+        }
+        .deferrend{
+           background-color: #008800 
+        }
+        .profit{
+            background-color: #8888ff 
+        }
+        .allMoneyFlow{
+            background-color: #AAAAAA
+        }
+        #tableActives tr:last-child  {
+            /* //background-color: #ffff00; */
+            text-align: center;
+        }
+        #buttonNewActive{
+            text-align: center;
+            /* //color: red; */
+        }
+        #formNewActive{
+            display: none;
+            position: absolute;
+            width: 200px;
+            height: 160px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px;
+            border: 1px solid black;
+            background-color: #FFFFFF;
+            z-index: 100;
+        }       
+        #formNewActive input{
+            margin-bottom: 15px;
+        }
+        #formNewActive h3{
+            margin-top: 1px;
+            margin-bottom: 5px;
+        }
+        
+    </style>
+</head>
+<body>
+    <table id="tableIncome">
+        <tr>
+            <th>год</th>
+            <th>доход</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td class="income">3000</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td class="income">3500</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td class="income">4000</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td class="income">4500</td>
+        </tr>
+        <!-- <tr>
+            <td>3</td>
+            <td class="income">4000</td>
+        </tr> -->
+        <tr>
+            <td colspan="2"> <button>добавить</button> </td>
+        </tr>
+    </table>
+    <table id="tableActives">
+        <tr>
+            <th>№</th>
+            <th>время покупки</th>
+            <th>цена</th>
+            <th>доход</th>
+        </tr>
+        <tr class="trActive">
+            <td>1</td>
+            <td>январь/2001</td>
+            <td class="priceActive">60000</td>
+            <td class="incomeActive">3000</td>
+        </tr>
+        <!-- <tr>
+            <td>2</td>
+            <td>январь/2001</td>
+            <td class="priceActive">60000</td>
+            <td class="incomeActive">3000</td>
+        </tr> -->
+        <tr>
+            <td colspan="4"> <button id="buttonNewActives">добавить</button> </td>
+        </tr>
+    </table>
+    <table id="tableByTime">
+        <tr>
+            <th>№</th>
+            <th>время</th>
+            <th>работа</th>
+            <th>денежный поток</th>
+
+            <th>отложено в капитал</th>
+            <th>капитал</th>
+
+            <th>отложено в подушку</th>
+            <th>подушка</th>
+
+            <th>остаток</th>
+
+            <th colspan="10" id="actives">активы</th>
+            <th id="nameSpending">Имя траты</th>
+            <th>трата</th>
+            <th>пас доход</th>
+            <th>чист пас доход</th>
+            <th>Дело Х</th>
+        </tr>
+        <tr id="columnZero">
+            <td>0</td>
+            <td>январь 2000</td>
+            <td>3000</td>
+            <td class="allMoneyFlow">3000</td>
+
+            <td >0</td>
+            <td class="capital">0</td>
+
+            <td>3000</td>
+            <td class="deferrend">3000</td>
+
+            <td>0</td>
+
+                <td class="active">0</td>
+                <td class="active">0</td>
+                <td class="active">0</td>
+                <td class="active">0</td>
+                <td class="active">0</td>
+                <td class="active">0</td>
+                <td class="active">0</td>
+                <td class="active">0</td>
+                <td class="active">0</td>
+                <td class="active">0</td>
+
+            
+            <!-- <td>0</td> -->
+            <td></td>
+            <td>0</td>
+            <td>0</td>
+            <td class="profit">0</td>
+            <td>0</td>
+        </tr>
+    </table>
+    <form action="" id="formNewActive">
+        <h3>Новый актив</h3>
+        <label for="priceActiveInform">Цена актива</label>
+        <input type="text" id="priceActiveInForm" value='10000'>
+        <br>
+        <label for="incomeActiveInform">Ожидаемый доход</label>
+        <input type="text" id="incomeActiveInForm" value="1000">
+        <br>
+        <button id="buttonFormAddActive">Добавить</button>
+        <button id="buttonFormCancelActive">Отмена</button>
+    </form>
+</body>
+</html>
