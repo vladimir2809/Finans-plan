@@ -61,9 +61,13 @@
             /* //background-color: #ffff00; */
             text-align: center;
         }
-        #buttonNewActive{
-            text-align: center;
-            /* //color: red; */
+        #buttonDeleteActives{
+           
+            display: none;
+        }
+        #buttonNewActives{
+          
+          
         }
         #formNewActive{
             display: none;
@@ -85,6 +89,7 @@
             margin-top: 1px;
             margin-bottom: 5px;
         }
+        
         
     </style>
 </head>
@@ -138,7 +143,11 @@
             <td class="incomeActive">3000</td>
         </tr> -->
         <tr>
-            <td colspan="4"> <button id="buttonNewActives">добавить</button> </td>
+             <!-- <button id="buttonDeleteActives">добавить</button>  -->
+            <td colspan="4"> 
+                <button id="buttonDeleteActives">Удалить</button> 
+                <button id="buttonNewActives">добавить</button> 
+            </td>
         </tr>
     </table>
     <table id="tableByTime">

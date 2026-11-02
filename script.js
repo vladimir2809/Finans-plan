@@ -29,7 +29,8 @@ window.addEventListener('load',function(event){
     var tdList=cloneColumnZero.getElementsByTagName('td');
 
 
-    var btnNewActives=document.getElementById('buttonNewActives')
+    var bthDeleleActives=document.getElementById('buttonDeleteActives');
+    var btnNewActives=document.getElementById('buttonNewActives');
 
     var btnFormAddActive=document.getElementById('buttonFormAddActive');
 
@@ -222,6 +223,7 @@ window.addEventListener('load',function(event){
         document.querySelector("body").style.minHeight = topTableTime+350+'px';
 
         formNewActive.style.display='none';
+        buttonDeleteActives.style.display='inline-block'
 
     })
 
