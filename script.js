@@ -192,7 +192,8 @@ window.addEventListener('load',function(event){
         formNewActive.style.display="block";
 
     })
-    document.getElementById('buttonFormCancelActive').addEventListener('click', ()=>{
+    document.getElementById('buttonFormCancelActive').addEventListener('click', (e)=>{
+        e.preventDefault();
         formNewActive.style.display='none';
     })
     btnFormAddActive.addEventListener('click',function(event){
@@ -203,7 +204,7 @@ window.addEventListener('load',function(event){
         let trElemLastActive =  trElemArr[index].cloneNode(true);
         console.log(trElemLastActive);
         let tdElemArr = trElemLastActive.querySelectorAll('td');
-        tdElemArr[0].innerText = index+1;
+        tdElemArr[0].innerText = index+2;
         tdElemArr[2].innerText = Number(document.getElementById('priceActiveInForm').value);
         tdElemArr[3].innerText = Number(document.getElementById('incomeActiveInForm').value);
         console.log(trElemLastActive);
@@ -217,16 +218,29 @@ window.addEventListener('load',function(event){
         clearTableTime();
         calcTableTime();
 
+        let heightBody=document.body.offsetHeight;
         topTableTime += 30;
+        heightBody += 30;
         tableTime.style.top = topTableTime+'px';
 
-        document.querySelector("body").style.minHeight = topTableTime+350+'px';
+        document.querySelector("body").style.minHeight = heightBody+'px';
+        // document.querySelector("footer").style.top="calc(100% - 150px)";
+        // document.querySelector("footer").style.bottom="100%";
 
         formNewActive.style.display='none';
         buttonDeleteActives.style.display='inline-block'
 
     })
-
+    document.getElementById('buttonDeleteActives').addEventListener('click', (e)=>{
+        e.preventDefault();
+        const table = document.getElementById('tableActives');
+        let index= table.querySelectorAll('tr').length-2; 
+        table.deleteRow(index);
+        if (index <= 2)
+        {
+            document.getElementById('buttonDeleteActives').style.display='none';    
+        }
+    })
     function calcInvestIncome(tdList, activesArr)
     {
         for (let i=0;i<10;i++)

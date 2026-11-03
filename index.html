@@ -6,9 +6,28 @@
     <script src="script.js"></script>
     <title>Document</title>
     <style>
+        html, body{
+            min-height: 2100px;
+            margin: 0;
+            padding: 0;
+        }
         body{
-            min-height: 1500px;
-            padding-bottom: 50px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main{
+            flex-grow: 1;
+        }
+        footer{
+            position: relative;
+            /* flex-grow: 1; */
+            top: calc(100% - 150px);
+            bottom: 100%;
+            width: 100%;
+            height: 150px;
+            /* margin-top: 40px; */
+            background-color: aquamarine;
         }
         #tableIncome{
             position: absolute;
@@ -94,118 +113,125 @@
     </style>
 </head>
 <body>
-    <table id="tableIncome">
-        <tr>
-            <th>год</th>
-            <th>доход</th>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td class="income">3000</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td class="income">3500</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td class="income">4000</td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td class="income">4500</td>
-        </tr>
-        <!-- <tr>
-            <td>3</td>
-            <td class="income">4000</td>
-        </tr> -->
-        <tr>
-            <td colspan="2"> <button>добавить</button> </td>
-        </tr>
-    </table>
-    <table id="tableActives">
-        <tr>
-            <th>№</th>
-            <th>время покупки</th>
-            <th>цена</th>
-            <th>доход</th>
-        </tr>
-        <tr class="trActive">
-            <td>1</td>
-            <td>январь/2001</td>
-            <td class="priceActive">60000</td>
-            <td class="incomeActive">3000</td>
-        </tr>
-        <!-- <tr>
-            <td>2</td>
-            <td>январь/2001</td>
-            <td class="priceActive">60000</td>
-            <td class="incomeActive">3000</td>
-        </tr> -->
-        <tr>
-             <!-- <button id="buttonDeleteActives">добавить</button>  -->
-            <td colspan="4"> 
-                <button id="buttonDeleteActives">Удалить</button> 
-                <button id="buttonNewActives">добавить</button> 
-            </td>
-        </tr>
-    </table>
-    <table id="tableByTime">
-        <tr>
-            <th>№</th>
-            <th>время</th>
-            <th>работа</th>
-            <th>денежный поток</th>
+    <main>
+        <table id="tableIncome">
+                <tr>
+                    <th>год</th>
+                <th>доход</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td class="income">3000</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td class="income">3500</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td class="income">4000</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td class="income">4500</td>
+            </tr>
+            <!-- <tr>
+                <td>3</td>
+                <td class="income">4000</td>
+            </tr> -->
+            <tr>
+                <td colspan="2"> <button>добавить</button> </td>
+            </tr>
+        </table>
+        <table id="tableActives">
+            <tr>
+                <th>№</th>
+                <th>время покупки</th>
+                <th>цена</th>
+                <th>доход</th>
+            </tr>
+            <tr class="trActive">
+                <td>1</td>
+                <td>январь/2001</td>
+                <td class="priceActive">60000</td>
+                <td class="incomeActive">3000</td>
+            </tr>
+            <!-- <tr>
+                <td>2</td>
+                <td>январь/2001</td>
+                <td class="priceActive">60000</td>
+                <td class="incomeActive">3000</td>
+            </tr> -->
+            <tr>
+                <!-- <button id="buttonDeleteActives">добавить</button>  -->
+                <td colspan="4"> 
+                    <button id="buttonDeleteActives">Удалить</button> 
+                    <button id="buttonNewActives">добавить</button> 
+                </td>
+            </tr>
+        </table>
+        <table id="tableByTime">
+            <tr>
+                <th>№</th>
+                <th>время</th>
+                <th>работа</th>
+                <th>денежный поток</th>
 
-            <th>отложено в капитал</th>
-            <th>капитал</th>
+                <th>отложено в капитал</th>
+                <th>капитал</th>
 
-            <th>отложено в подушку</th>
-            <th>подушка</th>
+                <th>отложено в подушку</th>
+                <th>подушка</th>
 
-            <th>остаток</th>
+                <th>остаток</th>
 
-            <th colspan="10" id="actives">активы</th>
-            <th id="nameSpending">Имя траты</th>
-            <th>трата</th>
-            <th>пас доход</th>
-            <th>чист пас доход</th>
-            <th>Дело Х</th>
-        </tr>
-        <tr id="columnZero">
-            <td>0</td>
-            <td>январь 2000</td>
-            <td>3000</td>
-            <td class="allMoneyFlow">3000</td>
+                <th colspan="10" id="actives">активы</th>
+                <th id="nameSpending">Имя траты</th>
+                <th>трата</th>
+                <th>пас доход</th>
+                <th>чист пас доход</th>
+                <th>Дело Х</th>
+            </tr>
+            <tr id="columnZero">
+                <td>0</td>
+                <td>январь 2000</td>
+                <td>3000</td>
+                <td class="allMoneyFlow">3000</td>
 
-            <td >0</td>
-            <td class="capital">0</td>
+                <td >0</td>
+                <td class="capital">0</td>
 
-            <td>3000</td>
-            <td class="deferrend">3000</td>
+                <td>3000</td>
+                <td class="deferrend">3000</td>
 
-            <td>0</td>
+                <td>0</td>
 
-                <td class="active">0</td>
-                <td class="active">0</td>
-                <td class="active">0</td>
-                <td class="active">0</td>
-                <td class="active">0</td>
-                <td class="active">0</td>
-                <td class="active">0</td>
-                <td class="active">0</td>
-                <td class="active">0</td>
-                <td class="active">0</td>
+                    <td class="active">0</td>
+                    <td class="active">0</td>
+                    <td class="active">0</td>
+                    <td class="active">0</td>
+                    <td class="active">0</td>
+                    <td class="active">0</td>
+                    <td class="active">0</td>
+                    <td class="active">0</td>
+                    <td class="active">0</td>
+                    <td class="active">0</td>
 
-            
-            <!-- <td>0</td> -->
-            <td></td>
-            <td>0</td>
-            <td>0</td>
-            <td class="profit">0</td>
-            <td>0</td>
-        </tr>
-    </table>
+                
+                <!-- <td>0</td> -->
+                <td></td>
+                <td>0</td>
+                <td>0</td>
+                <td class="profit">0</td>
+                <td>0</td>
+            </tr>
+        </table>
+    </main>
+    <footer>
+
+    </footer>
+   
+</body> 
     <form action="" id="formNewActive">
         <h3>Новый актив</h3>
         <label for="priceActiveInform">Цена актива</label>
@@ -217,5 +243,5 @@
         <button id="buttonFormAddActive">Добавить</button>
         <button id="buttonFormCancelActive">Отмена</button>
     </form>
-</body>
 </html>
+
