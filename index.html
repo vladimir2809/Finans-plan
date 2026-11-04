@@ -108,8 +108,25 @@
             margin-top: 1px;
             margin-bottom: 5px;
         }
-        
-        
+        #formOptions{
+            position: absolute;
+            top: 30px;
+            left: 500px;
+            padding: 10px;
+            border: 1px solid black;
+        }
+        #formOptions input{
+            margin-bottom: 5px;
+        }
+        #formOptions button{
+            /* text-align: center; */
+            /* margin: 0 auto; */
+            position: relative;
+            left: 50%;
+            transform: translate(-50%, 0);
+            color: black;
+
+        }
     </style>
 </head>
 <body>
@@ -242,6 +259,27 @@
         <br>
         <button id="buttonFormAddActive">Добавить</button>
         <button id="buttonFormCancelActive">Отмена</button>
+    </form>
+    <form action="" id="formOptions">
+        <input type="text" id="firstIncome" value="3000">
+        <label for="firstIncome">Базовый доход</label>
+        <br>
+        <input type="text" id="summCashCashion" value="60000">
+        <label for="summCashCashion">Цена подушки безопасности</label>
+        <br>
+        <input type="text" id="firstActivePrice" value="100000">
+        <label for="firstActivePrice">Цена первого актива</label>
+        <br>
+        <input type="text" id="firstActiveIncome" value="10000">
+        <label for="firstActiveIncome">Доход первого актива</label>
+        <br>
+        <input type="text" id="flowCaseX" value="20">
+        <label for="flowCaseX">Процент на дело X</label>
+        <br>
+        <input type="text" id="flowInCashCashion" value="20">
+        <label for="flowInCashCashion">Процент на подушку</label>
+        <br>
+        <button id="buttonStartOptions">расчитать</button>
     </form>
 </html>
 

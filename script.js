@@ -35,6 +35,8 @@ window.addEventListener('load',function(event){
     var btnFormAddActive=document.getElementById('buttonFormAddActive');
 
     var formNewActive = document.getElementById("formNewActive");
+
+    var inputArr = document.querySelectorAll('#formOptions input');
     // cloneColumnZero.style.display='none';
     // clearTableTime();
     calcTableTime();
@@ -241,6 +243,89 @@ window.addEventListener('load',function(event){
             document.getElementById('buttonDeleteActives').style.display='none';    
         }
     })
+    valueInputArr=[
+            {num:2, value: 1},
+            {num:3, value: 1},
+
+            {num:4, value: 20},
+            {num:5, value: 20},
+            {num:6, value: 1},
+            {num:7, value: 1},
+
+        ]
+    for (let i = 0; i < inputArr.length; i++) 
+    {
+        for (let j = 0; j < valueInputArr.length; j++) 
+        {
+                if (i == valueInputArr[j].num)
+                {
+                    inputArr[i].nextElementSibling.innerHTML += valueInputArr[j].value;             
+                }
+        }            
+    }
+    console.log(inputArr)
+    setInterval(function () {
+        for (let i = 0; i < inputArr.length; i++)
+        {
+            for (let j = 0; j < valueInputArr.length;j++)
+            {
+            
+                
+                if (i==valueInputArr[j].num)
+                if ((Number(inputArr[i].value) < valueInputArr[j].value && i<=3    )
+                || 
+                    ( Number(inputArr[i].value) > 99 && (i==4  || i==5))) 
+                {
+                    inputArr[i].style.color = "red";
+                } 
+                else
+                {
+                    inputArr[i].style.color = "black";
+                }
+            }
+        
+        }
+    }, 16);
+    for (let i = 0; i < inputArr.length; i++) 
+    {
+        inputArr[i].onblur = function (){
+                    
+            for (let j = 0; j < valueInputArr.length; j++) 
+            {
+
+                if (i == valueInputArr[j].num)
+                if ((Number(inputArr[i].value) < valueInputArr[j].value && i<=3 )||
+                    (Number(inputArr[i].value) > 99 && (i==4  || i==5))
+                    ||
+                    inputArr[i].value == '' //|| 
+                   // inputArr[i].value.length > 2
+                ) 
+
+                {
+                    inputArr[i].value = valueInputArr[j].value;
+                }
+            }
+
+        }
+    }
+    //setInterval(function () {
+    ;
+    for (let i = 0; i < inputArr.length;i++)
+    {
+
+        //inputArr[i].oninput = e => 
+        inputArr[i].oninput = function (e) {
+            //if (inputArr[i].value == '0') inputArr[i].value = '';
+                e.target.value = e.target.value.replace(/^0/, ''); 
+                e.target.value = e.target.value.replace(/\D/g, '');
+                if (inputArr[i].value.match("^0+")) {
+                    inputArr[i].value = '';
+                }
+            
+        }
+        
+        
+    }
     function calcInvestIncome(tdList, activesArr)
     {
         for (let i=0;i<10;i++)
