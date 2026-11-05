@@ -76,6 +76,9 @@
         .allMoneyFlow{
             background-color: #AAAAAA
         }
+        .active{
+            background-color: #FFC0CB;
+        }
         #tableActives tr:last-child  {
             /* //background-color: #ffff00; */
             text-align: center;
@@ -249,6 +252,8 @@
     </footer>
    
 </body> 
+
+
     <form action="" id="formNewActive">
         <h3>Новый актив</h3>
         <label for="priceActiveInform">Цена актива</label>
@@ -260,6 +265,9 @@
         <button id="buttonFormAddActive">Добавить</button>
         <button id="buttonFormCancelActive">Отмена</button>
     </form>
+
+
+
     <form action="" id="formOptions">
         <input type="text" id="firstIncome" value="3000">
         <label for="firstIncome">Базовый доход</label>
@@ -267,10 +275,10 @@
         <input type="text" id="summCashCashion" value="60000">
         <label for="summCashCashion">Цена подушки безопасности</label>
         <br>
-        <input type="text" id="firstActivePrice" value="100000">
+        <input type="text" id="firstActivePrice" value="60000">
         <label for="firstActivePrice">Цена первого актива</label>
         <br>
-        <input type="text" id="firstActiveIncome" value="10000">
+        <input type="text" id="firstActiveIncome" value="3000">
         <label for="firstActiveIncome">Доход первого актива</label>
         <br>
         <input type="text" id="flowCaseX" value="20">

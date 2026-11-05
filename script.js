@@ -13,8 +13,11 @@ var investMoneyFlow=0;
 var moneyFlow=0;
 var profitMoney=0;
 var deedMoneyX=0;
+var multDeedMoneyX=0.2;
 var capital=0;
 var cashCashion=0;
+var summCashCashion=60000;
+var multCashCashion=0.2;
 var deferredToCapital=0;
 var deferredToCashCashion=0;
 window.addEventListener('load',function(event){
@@ -37,6 +40,9 @@ window.addEventListener('load',function(event){
     var formNewActive = document.getElementById("formNewActive");
 
     var inputArr = document.querySelectorAll('#formOptions input');
+
+    let activesElemsPrice=tableActives.getElementsByClassName('priceActive');
+    let activesElemsIncome=tableActives.getElementsByClassName('incomeActive');
     // cloneColumnZero.style.display='none';
     // clearTableTime();
     calcTableTime();
@@ -111,14 +117,14 @@ window.addEventListener('load',function(event){
             {
                 tdList[3].innerText=moneyFlow; 
             }
-            if (cashCashion>60000)
+            if (cashCashion>summCashCashion)
             {
+                console.log(multCashCashion)
+                profitMoney = investMoneyFlow * (1-multDeedMoneyX)//*0.8;
+                deedMoneyX = investMoneyFlow * multDeedMoneyX;
 
-                profitMoney = investMoneyFlow*0.8;
-                deedMoneyX = investMoneyFlow*0.2;
-
-                deferredToCapital = moneyFlow*0.8;
-                deferredToCashCashion = moneyFlow*0.2;
+                deferredToCapital = moneyFlow * (1-multCashCashion)//*0.8;
+                deferredToCashCashion = moneyFlow * multCashCashion//*0.2;
                 capital += deferredToCapital;
                 cashCashion += deferredToCashCashion;
                 
@@ -145,8 +151,9 @@ window.addEventListener('load',function(event){
             tdList[23].innerText=deedMoneyX;
 
             // ACTIVES
-            let activesElemsPrice=tableActives.getElementsByClassName('priceActive');
-            let activesElemsIncome=tableActives.getElementsByClassName('incomeActive');
+
+            //let activesElemsPrice=tableActives.getElementsByClassName('priceActive');
+          //  let activesElemsIncome=tableActives.getElementsByClassName('incomeActive');
             console.log(tableActives);
             console.log(activesElemsPrice);
             console.log(activesElemsIncome);
@@ -243,27 +250,44 @@ window.addEventListener('load',function(event){
             document.getElementById('buttonDeleteActives').style.display='none';    
         }
     })
+    document.getElementById('formOptions').addEventListener('click', function(e){
+        e.preventDefault();
+    
+    
+        clearTableTime();
+
+        let dataInput=document.getElementById("formOptions");
+
+        let value=dataInput.firstIncome.value;
+        tableIncome.getElementsByClassName('income')[0].innerText=value;
+
+        summCashCashion=Number(dataInput.summCashCashion.value);
+
+        multCashCashion=Number(dataInput.flowInCashCashion.value) / 100;
+
+        value=dataInput.firstActivePrice.value;
+        tableActives.getElementsByClassName('priceActive')[0].innerText=value;
+      
+        value=dataInput.firstActiveIncome.value;
+        tableActives.getElementsByClassName('incomeActive')[0].innerText=value;
+
+        multDeedMoneyX=Number(dataInput.flowCaseX.value) / 100;
+
+        deferredToCashCashion=Number(dataInput.flowInCashCashion.value);
+     
+        calcTableTime();
+    });
     valueInputArr=[
-            {num:2, value: 1},
-            {num:3, value: 1},
+        {num:0, value: 3000},
+        {num:1, value: 60000},
+        {num:2, value: 100000},
+        {num:3, value: 10000},
+        {num:4, value: 20},
+        {num:5, value: 20},
+        
 
-            {num:4, value: 20},
-            {num:5, value: 20},
-            {num:6, value: 1},
-            {num:7, value: 1},
-
-        ]
-    for (let i = 0; i < inputArr.length; i++) 
-    {
-        for (let j = 0; j < valueInputArr.length; j++) 
-        {
-                if (i == valueInputArr[j].num)
-                {
-                    inputArr[i].nextElementSibling.innerHTML += valueInputArr[j].value;             
-                }
-        }            
-    }
-    console.log(inputArr)
+    ];
+    // console.log(inputArr)
     setInterval(function () {
         for (let i = 0; i < inputArr.length; i++)
         {
@@ -272,8 +296,9 @@ window.addEventListener('load',function(event){
             
                 
                 if (i==valueInputArr[j].num)
-                if ((Number(inputArr[i].value) < valueInputArr[j].value && i<=3    )
-                || 
+                if (//(Number(inputArr[i].value) < valueInputArr[j].value && i<=3 ) || 
+                    // (i<=3)
+                    //  ||
                     ( Number(inputArr[i].value) > 99 && (i==4  || i==5))) 
                 {
                     inputArr[i].style.color = "red";
@@ -294,7 +319,8 @@ window.addEventListener('load',function(event){
             {
 
                 if (i == valueInputArr[j].num)
-                if ((Number(inputArr[i].value) < valueInputArr[j].value && i<=3 )||
+                if (//(Number(inputArr[i].value) < valueInputArr[j].value && i<=3 )||
+                   // i<=3 ||
                     (Number(inputArr[i].value) > 99 && (i==4  || i==5))
                     ||
                     inputArr[i].value == '' //|| 
@@ -308,24 +334,26 @@ window.addEventListener('load',function(event){
 
         }
     }
-    //setInterval(function () {
-    ;
-    for (let i = 0; i < inputArr.length;i++)
-    {
+    setInterval(function () {
+    
+        for (let i = 0; i < inputArr.length;i++)
+        {
 
-        //inputArr[i].oninput = e => 
-        inputArr[i].oninput = function (e) {
-            //if (inputArr[i].value == '0') inputArr[i].value = '';
-                e.target.value = e.target.value.replace(/^0/, ''); 
-                e.target.value = e.target.value.replace(/\D/g, '');
-                if (inputArr[i].value.match("^0+")) {
-                    inputArr[i].value = '';
-                }
-            
+            //inputArr[i].oninput = e => 
+            inputArr[i].oninput = function (e) {
+                //if (inputArr[i].value == '0') inputArr[i].value = '';
+                    e.target.value = e.target.value.replace(/^0/, ''); 
+                    e.target.value = e.target.value.replace(/\D/g, '');
+                    if (inputArr[i].value.match("^0+")) 
+                    {
+                        inputArr[i].value = '';
+                    }
+                
+            }
+        
+        
         }
-        
-        
-    }
+    },10)
     function calcInvestIncome(tdList, activesArr)
     {
         for (let i=0;i<10;i++)
