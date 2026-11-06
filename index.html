@@ -111,6 +111,26 @@
             margin-top: 1px;
             margin-bottom: 5px;
         }
+        #formNewJobIncome{
+            display: none;
+            position: absolute;
+            width: 200px;
+            height: 110px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px;
+            border: 1px solid black;
+            background-color: #FFFFFF;
+            z-index: 100;
+        }
+        #formNewJobIncome input{
+            margin-bottom: 15px;
+        }
+        #formNewJobIncome h3{
+            margin-top: 1px;
+            margin-bottom: 5px;
+        }
         #formOptions{
             position: absolute;
             top: 30px;
@@ -135,15 +155,15 @@
 <body>
     <main>
         <table id="tableIncome">
-                <tr>
+            <tr>
                     <th>год</th>
                 <th>доход</th>
             </tr>
-            <tr>
+            <tr class="trIncome">
                 <td>1</td>
                 <td class="income">3000</td>
             </tr>
-            <tr>
+            <!-- <tr>
                 <td>2</td>
                 <td class="income">3500</td>
             </tr>
@@ -154,13 +174,16 @@
             <tr>
                 <td>4</td>
                 <td class="income">4500</td>
-            </tr>
-            <!-- <tr>
-                <td>3</td>
+            </tr> 
+            <tr>
+                <td>5</td>
                 <td class="income">4000</td>
             </tr> -->
             <tr>
-                <td colspan="2"> <button>добавить</button> </td>
+                <td colspan="2" " >
+                    <button id="buttonDeleteJobIncome">удалить</button> 
+                    <button id="buttonNewJobIncome">добавить</button> 
+                </td>
             </tr>
         </table>
         <table id="tableActives">
@@ -172,7 +195,7 @@
             </tr>
             <tr class="trActive">
                 <td>1</td>
-                <td>январь/2001</td>
+                <td class="monthYearActive">январь/2001</td>
                 <td class="priceActive">60000</td>
                 <td class="incomeActive">3000</td>
             </tr>
@@ -252,6 +275,16 @@
     </footer>
    
 </body> 
+
+    <form action="" id="formNewJobIncome">
+        <h3> Добавить доход</h3>
+        <label for="incomeJobIncomeInForm">Ожидаемый доход</label>
+        <input type="text" id="incomeJobInForm" value="3000">
+        <br>
+        <button id="buttonFormAddJobIncome">Добавить</button>
+        <button id="buttonFormCancelJobIncome">Отмена</button>
+    </form>
+
 
 
     <form action="" id="formNewActive">

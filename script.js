@@ -4,7 +4,10 @@ var nameMonth=['январь','февраль','март','апрель','май
 var active={price: null, income:null}
 var activesArr=[];
 var topTableTime=300;
+
+var maxCountActives=10;
 var countActives=0;
+var countYearJob=1;
 
 var countMounth=60;
 
@@ -34,12 +37,17 @@ window.addEventListener('load',function(event){
 
     var bthDeleleActives=document.getElementById('buttonDeleteActives');
     var btnNewActives=document.getElementById('buttonNewActives');
+    var btnNewJobIncome=document.getElementById('buttonNewJobIncome');
 
     var btnFormAddActive=document.getElementById('buttonFormAddActive');
 
     var formNewActive = document.getElementById("formNewActive");
+    var formNewJobIncome =document.getElementById("formNewJobIncome");
 
     var inputArr = document.querySelectorAll('#formOptions input');
+
+    var inputNewActives=document.querySelectorAll('#formNewActive input')
+    inputArr = [...inputArr, ...inputNewActives];
 
     let activesElemsPrice=tableActives.getElementsByClassName('priceActive');
     let activesElemsIncome=tableActives.getElementsByClassName('incomeActive');
@@ -120,11 +128,11 @@ window.addEventListener('load',function(event){
             if (cashCashion>summCashCashion)
             {
                 console.log(multCashCashion)
-                profitMoney = investMoneyFlow * (1-multDeedMoneyX)//*0.8;
-                deedMoneyX = investMoneyFlow * multDeedMoneyX;
+                profitMoney = Math.trunc(investMoneyFlow * (1-multDeedMoneyX))//*0.8;
+                deedMoneyX = Math.trunc(investMoneyFlow * multDeedMoneyX);
 
-                deferredToCapital = moneyFlow * (1-multCashCashion)//*0.8;
-                deferredToCashCashion = moneyFlow * multCashCashion//*0.2;
+                deferredToCapital = Math.trunc(moneyFlow * (1-multCashCashion))//*0.8;
+                deferredToCashCashion = Math.trunc(moneyFlow * multCashCashion)//*0.2;
                 capital += deferredToCapital;
                 cashCashion += deferredToCashCashion;
                 
@@ -154,9 +162,13 @@ window.addEventListener('load',function(event){
 
             //let activesElemsPrice=tableActives.getElementsByClassName('priceActive');
           //  let activesElemsIncome=tableActives.getElementsByClassName('incomeActive');
-            console.log(tableActives);
-            console.log(activesElemsPrice);
-            console.log(activesElemsIncome);
+
+
+            // console.log(tableActives);
+            // console.log(activesElemsPrice);
+            // console.log(activesElemsIncome);
+
+
             // let priceActive=Number(activesElemsPrice[countActives].innerHTML);
             // let incomeActive=Number(activesElemsIncome[countActives].innerHTML);
             if (countActives >= activesElemsPrice.length)
@@ -185,6 +197,8 @@ window.addEventListener('load',function(event){
                 activNew=JSON.parse(JSON.stringify(active));
                 activNew={price: priceActive, income: incomeActive};
                 activesArr.push(activNew)
+                let monthYearValue = tdList[1].innerHTML;
+                document.getElementsByClassName('monthYearActive')[countActives].innerHTML =  monthYearValue;
                 //if (countActives < activesElemsPrice.length-1)
                 {
                     countActives++;
@@ -207,7 +221,7 @@ window.addEventListener('load',function(event){
     })
     btnFormAddActive.addEventListener('click',function(event){
         event.preventDefault();
-        var trElemArr = document.querySelectorAll('.trActive')
+        let trElemArr = document.querySelectorAll('.trActive')
         let index = trElemArr.length-1;
         console.log(index);
         let trElemLastActive =  trElemArr[index].cloneNode(true);
@@ -238,6 +252,10 @@ window.addEventListener('load',function(event){
 
         formNewActive.style.display='none';
         buttonDeleteActives.style.display='inline-block'
+        if (countActives>=maxCountActives)
+        {
+            btnNewActives.style.display='none';
+        }
 
     })
     document.getElementById('buttonDeleteActives').addEventListener('click', (e)=>{
@@ -249,8 +267,15 @@ window.addEventListener('load',function(event){
         {
             document.getElementById('buttonDeleteActives').style.display='none';    
         }
+        countActives--;
+        if (countActives < maxCountActives)
+        {
+            btnNewActives.style.display='inline-block';
+        }
+        clearTableTime();
+        calcTableTime();
     })
-    document.getElementById('formOptions').addEventListener('click', function(e){
+    document.getElementById('buttonStartOptions').addEventListener('click', function(e){
         e.preventDefault();
     
     
@@ -277,6 +302,68 @@ window.addEventListener('load',function(event){
      
         calcTableTime();
     });
+    btnNewJobIncome.addEventListener('click', function(e){
+        e.preventDefault();
+        formNewJobIncome.style.display="block";
+    })
+    document.getElementById('buttonFormAddJobIncome').addEventListener('click', function(e){
+        e.preventDefault();
+        clearTableTime();
+        let tableJobIncone=document.getElementById('tableIncome');
+        let dataInput=document.getElementById("formNewJobIncome");
+
+        let value=dataInput.incomeJobInForm.value;
+
+        let trElemArr = document.querySelectorAll('.trIncome')
+
+        let index = tableJobIncone.rows.length-3;//children.length-1;
+        countYearJob=index+2;
+        console.log(index, countYearJob);
+        let trElemLastIncome =  trElemArr[index].cloneNode(true);
+        let tdElemArr = trElemLastIncome.querySelectorAll('td');
+        tdElemArr[0].innerText = index+2;
+        tdElemArr[1].innerText = value; 
+        document.querySelector('#tableIncome tr:last-child').before(trElemLastIncome);
+        document.getElementById('buttonDeleteJobIncome').style.display='inline-block';
+        calcTableTime();
+        formNewJobIncome.style.display="none";
+
+    })
+    document.getElementById('buttonDeleteJobIncome').addEventListener('click', function(e){
+        e.preventDefault();
+        // const table = document.getElementById('tableIncome');
+        // let index= table.querySelectorAll('tr').length-2; 
+        // table.deleteRow(index);
+        // if (index <= 2)
+        // {
+        //     document.getElementById('buttonDeleteJobIncome').style.display='none';    
+        // }
+
+        const table = document.getElementById('tableIncome');
+        let index= table.querySelectorAll('tr').length-2; 
+        table.deleteRow(index);
+        if (index <= 2)
+        {
+            document.getElementById('buttonDeleteJobIncome').style.display='none';    
+        }
+
+
+        clearTableTime();
+        calcTableTime();
+        countYearJob--;
+        // if (countActives < maxCountActives)
+        // {
+        //     btnNewActives.style.display='inline-block';
+        // }
+
+
+
+
+    })
+    document.getElementById('buttonFormCancelJobIncome').addEventListener('click', function(e){
+        e.preventDefault();
+        formNewJobIncome.style.display="none";
+    })
     valueInputArr=[
         {num:0, value: 3000},
         {num:1, value: 60000},
@@ -284,6 +371,9 @@ window.addEventListener('load',function(event){
         {num:3, value: 10000},
         {num:4, value: 20},
         {num:5, value: 20},
+        // form new Active
+        {num:6, value: 10000},
+        {num:7, value: 1000},
         
 
     ];
