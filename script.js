@@ -4,7 +4,7 @@ var nameMonth=['январь','февраль','март','апрель','май
 var active={price: null, income:null}
 var activesArr=[];
 var topTableTime=450;
-var topTableResults=280;
+var topTableResults=240;
 
 var maxCountActives=10;
 var countActives=0;
@@ -147,6 +147,7 @@ window.addEventListener('load',function(event){
             tdList[2].innerText=jobMoneyFlow;               //работа
             tdList[3].innerText=moneyFlow; //     денежный поток
             investMoneyFlow = 0;
+            deferredToCapital=0;
             // for (let i=0;i<10;i++)
             // {
             //     if (i<activesArr.length)
@@ -167,21 +168,26 @@ window.addEventListener('load',function(event){
                 profitMoney = Math.trunc(investMoneyFlow * (1-multDeedMoneyX))//*0.8;
                 deedMoneyX = Math.trunc(investMoneyFlow * multDeedMoneyX);
 
-                deferredToCapital = Math.trunc(moneyFlow * (1-multCashCashion))//*0.8;
+                moneyFlow=investMoneyFlow+jobMoneyFlow-deedMoneyX;
+
+                deferredToCapital = Math.trunc(moneyFlow * (1-multCashCashion)) //+ profitMoney//*0.8;
                 deferredToCashCashion = Math.trunc(moneyFlow * multCashCashion)//*0.2;
-                capital += deferredToCapital;
+
                 cashCashion += deferredToCashCashion;
-                
-                moneyFlow -= deedMoneyX;
+
+                capital += moneyFlow - deferredToCashCashion
                 tdList[3].innerText=moneyFlow;
+                tdList[4].innerText=moneyFlow - deferredToCashCashion; //отложено в капитал
                 tdList[6].innerText=deferredToCashCashion //отложено в падушку
             }
             else
             {
                 cashCashion += moneyFlow;
+                tdList[4].innerText=0; //отложено в капитал
+
                 tdList[6].innerText=moneyFlow; 
             }
-            tdList[4].innerText=deferredToCapital;          //отложено в капитал
+            // tdList[4].innerText=moneyFlow - deedMoneyX - deferredToCashCashion; //отложено в капитал
             tdList[5].innerText=capital;       // капитал
             
             // tdList[6].innerText=deferredToCashCashion //отложено в падушку
@@ -530,7 +536,9 @@ window.addEventListener('load',function(event){
             currency: 'RUB',
         });
         tdResultList[0].innerText=formatterRub.format(capital + cashCashion);
-        tdResultList[1].innerText=formatterRub.format(investMoneyFlow);
+        tdResultList[1].innerText=formatterRub.format(capital);
+        tdResultList[2].innerText=formatterRub.format(cashCashion);
+        tdResultList[3].innerText=formatterRub.format(investMoneyFlow);
         let summPriceActive=0;
         for (let i=0;i<10;i++)
         {
@@ -540,9 +548,9 @@ window.addEventListener('load',function(event){
                 summPriceActive += Number(activesArr[i].price);
             }
         }
-        tdResultList[2].innerText=formatterRub.format(summPriceActive)
+        tdResultList[4].innerText=formatterRub.format(summPriceActive)
         let result=summPriceActive + capital + cashCashion;
-        tdResultList[3].innerText=formatterRub.format(result);
+        tdResultList[5].innerText=formatterRub.format(result);
         ;
     }
     function moveTables(vector='down', numTable)
@@ -574,7 +582,7 @@ window.addEventListener('load',function(event){
         if (maxTop > 150)
         {    
             topTableResults = maxTop+180;
-            topTableTime = maxTop+350;
+            topTableTime = maxTop+390;
             heightBody = maxTop+2180;
         }
         tableTime.style.top = topTableTime+'px';
