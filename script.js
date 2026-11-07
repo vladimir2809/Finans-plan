@@ -3,7 +3,8 @@ var nameMonth=['январь','февраль','март','апрель','май
 ]
 var active={price: null, income:null}
 var activesArr=[];
-var topTableTime=300;
+var topTableTime=450;
+var topTableResults=280;
 
 var maxCountActives=10;
 var countActives=0;
@@ -49,6 +50,9 @@ window.addEventListener('load',function(event){
     var inputNewActives=document.querySelectorAll('#formNewActive input')
     inputArr = [...inputArr, ...inputNewActives];
 
+    var inputNewJobIncome=document.querySelectorAll('#formNewJobIncome input')
+    inputArr = [...inputArr, ...inputNewJobIncome];
+
     let activesElemsPrice=tableActives.getElementsByClassName('priceActive');
     let activesElemsIncome=tableActives.getElementsByClassName('incomeActive');
     // cloneColumnZero.style.display='none';
@@ -76,6 +80,11 @@ window.addEventListener('load',function(event){
         deferredToCashCashion=0;
 
         activesArr=[];
+        activesMonthYear=document.getElementsByClassName('monthYearActive');
+        for (let i=0; i < activesMonthYear.length;i++)
+        {
+            activesMonthYear[i].innerText='Недостачно средств.'
+        }
         // for (let i=0;i<countMounth;i++)
         // {
         //     tdList[i].remove();
@@ -83,7 +92,34 @@ window.addEventListener('load',function(event){
     }
     function calcTableTime()
     {
+        function calcBodyHeight(tableTime)
+        {
+            let heightBody=document.body.offsetHeight;
+      //      let tableTime=document.getElementById('tableByTime');
+            let tableActives=document.getElementById('tableActives');
+            let tableIncome=document.getElementById('tableIncome')
+    //        let tableResults=document.getElementById('tableResults');
+        // console.log(tableActives.offsetHeight);
+            let maxTop=max(tableIncome.offsetHeight, tableActives.offsetHeight).value;
+            // tableTime=document.getElementById('tableByTime');
+            heightBody = tableTime.offsetHeight+maxTop+700;
+            document.querySelector("body").style.minHeight = heightBody+'px'
+        }
+        if (countYearJob>5)
+        {
+            countMounth=countYearJob * 12;
 
+            //calcBodyHeight()
+            // let heightBody=document.body.offsetHeight;
+            // let tableTime=document.getElementById('tableByTime');
+            // heightBody = tableTime.offsetHeight+500;
+            // document.querySelector("body").style.minHeight = heightBody+'px'
+        }
+        else
+        {
+            countMounth=60;
+           
+        }
         for (let i=0;i<countMounth;i++)
         {
             let incomeElems=tableIncome.getElementsByClassName('income');
@@ -208,6 +244,8 @@ window.addEventListener('load',function(event){
             
             tableTime.appendChild(cloneColumnZero);
         }
+        calcResults();
+        calcBodyHeight(tableTime)
     }
     // btnNewActives
 
@@ -239,19 +277,24 @@ window.addEventListener('load',function(event){
         // trElemLastActive.before
 
         clearTableTime();
+        moveTables('down', 2);
         calcTableTime();
 
-        let heightBody=document.body.offsetHeight;
-        topTableTime += 30;
-        heightBody += 30;
-        tableTime.style.top = topTableTime+'px';
+        // let heightBody=document.body.offsetHeight;
+        // topTableTime += 30;
+        // heightBody += 30;
+        // tableTime.style.top = topTableTime+'px';
 
-        document.querySelector("body").style.minHeight = heightBody+'px';
+        // document.querySelector("body").style.minHeight = heightBody+'px';
         // document.querySelector("footer").style.top="calc(100% - 150px)";
         // document.querySelector("footer").style.bottom="100%";
 
         formNewActive.style.display='none';
-        buttonDeleteActives.style.display='inline-block'
+        buttonDeleteActives.style.display='inline-block';
+        if (index>maxCountActives)
+        {
+            btnNewActives.style.display ='none';
+        }
         if (countActives>=maxCountActives)
         {
             btnNewActives.style.display='none';
@@ -272,7 +315,9 @@ window.addEventListener('load',function(event){
         {
             btnNewActives.style.display='inline-block';
         }
+        
         clearTableTime();
+        moveTables('up',2);
         calcTableTime();
     })
     document.getElementById('buttonStartOptions').addEventListener('click', function(e){
@@ -325,6 +370,7 @@ window.addEventListener('load',function(event){
         tdElemArr[1].innerText = value; 
         document.querySelector('#tableIncome tr:last-child').before(trElemLastIncome);
         document.getElementById('buttonDeleteJobIncome').style.display='inline-block';
+        moveTables('down',1)
         calcTableTime();
         formNewJobIncome.style.display="none";
 
@@ -341,6 +387,7 @@ window.addEventListener('load',function(event){
 
         const table = document.getElementById('tableIncome');
         let index= table.querySelectorAll('tr').length-2; 
+        console.log(index)
         table.deleteRow(index);
         if (index <= 2)
         {
@@ -349,6 +396,7 @@ window.addEventListener('load',function(event){
 
 
         clearTableTime();
+        moveTables('up',1)
         calcTableTime();
         countYearJob--;
         // if (countActives < maxCountActives)
@@ -374,6 +422,8 @@ window.addEventListener('load',function(event){
         // form new Active
         {num:6, value: 10000},
         {num:7, value: 1000},
+        ///form job income
+        {num:8, value: 3000},
         
 
     ];
@@ -431,6 +481,20 @@ window.addEventListener('load',function(event){
 
             //inputArr[i].oninput = e => 
             inputArr[i].oninput = function (e) {
+                console.log(inputArr[8]);
+                console.log(e.target.value);
+                if(i==8)
+                {
+                    {       
+                        if (inputArr[i].value.match("^0+")) 
+                        {   
+                            inputArr[i].value = '0';
+                        }
+                        e.target.value = e.target.value.replace(/\D/g, '');
+                    }
+                }
+                else
+                {
                 //if (inputArr[i].value == '0') inputArr[i].value = '';
                     e.target.value = e.target.value.replace(/^0/, ''); 
                     e.target.value = e.target.value.replace(/\D/g, '');
@@ -438,7 +502,7 @@ window.addEventListener('load',function(event){
                     {
                         inputArr[i].value = '';
                     }
-                
+                }
             }
         
         
@@ -455,5 +519,82 @@ window.addEventListener('load',function(event){
             }
         }
         return investMoneyFlow;
+    }
+    function calcResults()
+    {
+        tableResult=document.getElementById('tableResults');
+        tdResultList=tableResult.querySelectorAll('.tdResult');
+        // Форматирование в рубли (₽)
+        const formatterRub = new Intl.NumberFormat('ru-RU', {
+            style: 'currency',
+            currency: 'RUB',
+        });
+        tdResultList[0].innerText=formatterRub.format(capital + cashCashion);
+        tdResultList[1].innerText=formatterRub.format(investMoneyFlow);
+        let summPriceActive=0;
+        for (let i=0;i<10;i++)
+        {
+            if (i<activesArr.length)
+            {
+                ///tdList[9+i].innerText=activesArr[i].pri;
+                summPriceActive += Number(activesArr[i].price);
+            }
+        }
+        tdResultList[2].innerText=formatterRub.format(summPriceActive)
+        let result=summPriceActive + capital + cashCashion;
+        tdResultList[3].innerText=formatterRub.format(result);
+        ;
+    }
+    function moveTables(vector='down', numTable)
+    {
+        let heightBody=document.body.offsetHeight;
+        let tableTime=document.getElementById('tableByTime');
+        let tableActives=document.getElementById('tableActives');
+        let tableIncome=document.getElementById('tableIncome')
+        let tableResults=document.getElementById('tableResults');
+        // console.log(tableActives.offsetHeight);
+        let maxTop=max(tableIncome.offsetHeight, tableActives.offsetHeight).value;
+        // let maxIndex=max(tableIncome.offsetHeight, tableActives.offsetHeight).index;
+        // if ((maxTop > 150) && (maxIndex==null || numTable==maxIndex ))
+        // {
+        //     if (vector=='down')
+        //     {
+                
+        //         topTableResults += 30;
+        //         topTableTime += 30;
+        //         heightBody += 30;
+        //     }
+        //     if (vector=='up')
+        //     {
+        //         topTableResults -= 30;
+        //         topTableTime -= 30;
+        //         heightBody -= 30;
+        //     }
+        // }
+        if (maxTop > 150)
+        {    
+            topTableResults = maxTop+180;
+            topTableTime = maxTop+350;
+            heightBody = maxTop+2180;
+        }
+        tableTime.style.top = topTableTime+'px';
+        tableResults.style.top = topTableResults+'px';
+       // let heightBody=document.body.offsetHeight + ;
+        document.querySelector("body").style.minHeight = heightBody+'px';
+    }
+    function max(val1, val2)
+    {
+        if (val1 >= val2)
+        {
+            return {value: val1, index: 1}
+        }
+        if (val1 < val2)
+        {
+            return {value: val2, index: 2};
+        }
+        // if (val1 == val2)
+        // {
+        //     return {value: null, index: null};;
+        // }
     }
 })
