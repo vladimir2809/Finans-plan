@@ -14,6 +14,7 @@
         body{
             display: flex;
             flex-direction: column;
+            overflow-y: hidden;
         }
 
         main{
@@ -153,11 +154,37 @@
         #formOptions button{
             /* text-align: center; */
             /* margin: 0 auto; */
-            position: relative;
+            /* position: relative;
             left: 50%;
-            transform: translate(-50%, 0);
+            transform: translate(-50%, 0); */
             color: black;
 
+        }
+        #formOptions div{
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding-top: 10px;
+        }
+        #formFile{
+            display: none; 
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+
+            left: 50%;
+            top: 50%;
+            background-color: #AAAAAAAA;
+            transform: translate(-50%, -50%);
+            
+            z-index: 100;
+        }
+        #formFile #fileInput{
+            position: relative;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 101;
         }
     </style>
 </head>
@@ -357,7 +384,14 @@
         <input type="text" id="flowInCashCashion" value="20">
         <label for="flowInCashCashion">Процент на подушку</label>
         <br>
-        <button id="buttonStartOptions">расчитать</button>
+        <div>
+            <button id="buttonReadFile">Загрузить</button>
+            <button id="buttonStartOptions">Расчитать</button>
+            <button id="buttonDownloadFile">Сохранить</button>
+        </div>
+    </form>
+    <form action="" id="formFile">
+        <input type="file" id="fileInput">
     </form>
 </html>
 

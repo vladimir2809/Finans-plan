@@ -24,10 +24,14 @@ var summCashCashion=60000;
 var multCashCashion=0.2;
 var deferredToCapital=0;
 var deferredToCashCashion=0;
+var btnNewActives=null;
+var file=null;
+var tableIncome=null;
+var tableActives=null;
 window.addEventListener('load',function(event){
-    var tableIncome=document.getElementById('tableIncome');
+    tableIncome=document.getElementById('tableIncome');
     
-    var tableActives=document.getElementById('tableActives');
+    tableActives=document.getElementById('tableActives');
 
     var tableTime=document.getElementById('tableByTime');
     var columnElem=document.getElementById('columnZero');
@@ -36,8 +40,8 @@ window.addEventListener('load',function(event){
     var tdList=cloneColumnZero.getElementsByTagName('td');
 
 
-    var bthDeleleActives=document.getElementById('buttonDeleteActives');
-    var btnNewActives=document.getElementById('buttonNewActives');
+    var btnDeleleActives=document.getElementById('buttonDeleteActives');
+    btnNewActives=document.getElementById('buttonNewActives');
     var btnNewJobIncome=document.getElementById('buttonNewJobIncome');
 
     var btnFormAddActive=document.getElementById('buttonFormAddActive');
@@ -57,6 +61,8 @@ window.addEventListener('load',function(event){
     let activesElemsIncome=tableActives.getElementsByClassName('incomeActive');
     // cloneColumnZero.style.display='none';
     // clearTableTime();
+    file = document.getElementById('fileInput');
+    file.addEventListener("change", handleFiles);
     calcTableTime();
     function clearTableTime()
     {
@@ -80,7 +86,7 @@ window.addEventListener('load',function(event){
         deferredToCashCashion=0;
 
         activesArr=[];
-        activesMonthYear=document.getElementsByClassName('monthYearActive');
+        let activesMonthYear=document.getElementsByClassName('monthYearActive');
         for (let i=0; i < activesMonthYear.length;i++)
         {
             activesMonthYear[i].innerText='Недостачно средств.'
@@ -265,21 +271,34 @@ window.addEventListener('load',function(event){
     })
     btnFormAddActive.addEventListener('click',function(event){
         event.preventDefault();
-        let trElemArr = document.querySelectorAll('.trActive')
-        let index = trElemArr.length-1;
-        console.log(index);
-        let trElemLastActive =  trElemArr[index].cloneNode(true);
-        console.log(trElemLastActive);
-        let tdElemArr = trElemLastActive.querySelectorAll('td');
-        tdElemArr[0].innerText = index+2;
-        tdElemArr[2].innerText = Number(document.getElementById('priceActiveInForm').value);
-        tdElemArr[3].innerText = Number(document.getElementById('incomeActiveInForm').value);
-        console.log(trElemLastActive);
+        // alert(883);
+        valuePrice = Number(document.getElementById('priceActiveInForm').value);
+        valueIncome = Number(document.getElementById('incomeActiveInForm').value)
+        let index=addActive(valuePrice, valueIncome);
+        // function addActive(price, income)
+        // {
 
-        // tableActives.appendChild(trElemLastActive);
+        
+        //     let trElemArr = document.querySelectorAll('.trActive')
+        //     let index = trElemArr.length-1;
+        //     console.log(index);
+        //     let trElemLastActive =  trElemArr[index].cloneNode(true);
+        //     console.log(trElemLastActive);
+        //     let tdElemArr = trElemLastActive.querySelectorAll('td');
+        //     tdElemArr[0].innerText = index+2;
+        //     // tdElemArr[2].innerText = Number(document.getElementById('priceActiveInForm').value);
+            
+        //     // tdElemArr[3].innerText = Number(document.getElementById('incomeActiveInForm').value);
+        //     tdElemArr[2].innerText = Number(price);
+        //     tdElemArr[3].innerText = Number(income);
+        //     console.log(trElemLastActive);
 
-        // btnNewActives.before(trElemLastActive);
-        document.querySelector('#tableActives tr:last-child').before(trElemLastActive);
+        // // tableActives.appendChild(trElemLastActive);
+
+        // // btnNewActives.before(trElemLastActive);
+        //     document.querySelector('#tableActives tr:last-child').before(trElemLastActive);
+        //     return index;
+        // }
         // trElemLastActive.before
 
         clearTableTime();
@@ -296,12 +315,15 @@ window.addEventListener('load',function(event){
         // document.querySelector("footer").style.bottom="100%";
 
         formNewActive.style.display='none';
+
+        //!!!
         buttonDeleteActives.style.display='inline-block';
-        if (index>maxCountActives)
-        {
-            btnNewActives.style.display ='none';
-        }
-        if (countActives>=maxCountActives)
+        
+        // if (countActives >= maxCountActives)
+        // {
+        //     btnNewActives.style.display ='none';
+        // }
+        if (index + 2 >= maxCountActives)
         {
             btnNewActives.style.display='none';
         }
@@ -360,21 +382,25 @@ window.addEventListener('load',function(event){
     document.getElementById('buttonFormAddJobIncome').addEventListener('click', function(e){
         e.preventDefault();
         clearTableTime();
-        let tableJobIncone=document.getElementById('tableIncome');
+        let tableJobIncome=document.getElementById('tableIncome');
         let dataInput=document.getElementById("formNewJobIncome");
 
         let value=dataInput.incomeJobInForm.value;
+        insertIncome(tableJobIncome,value)
+        // function insertIncome(tableJobIncome,value)
+        // {
 
-        let trElemArr = document.querySelectorAll('.trIncome')
-
-        let index = tableJobIncone.rows.length-3;//children.length-1;
-        countYearJob=index+2;
-        console.log(index, countYearJob);
-        let trElemLastIncome =  trElemArr[index].cloneNode(true);
-        let tdElemArr = trElemLastIncome.querySelectorAll('td');
-        tdElemArr[0].innerText = index+2;
-        tdElemArr[1].innerText = value; 
-        document.querySelector('#tableIncome tr:last-child').before(trElemLastIncome);
+        //     let trElemArr = document.querySelectorAll('.trIncome')
+            
+        //     let index = tableJobIncone.rows.length-3;//children.length-1;
+        //     countYearJob=index+2;
+        //     console.log(index, countYearJob);
+        //     let trElemLastIncome =  trElemArr[index].cloneNode(true);
+        //     let tdElemArr = trElemLastIncome.querySelectorAll('td');
+        //     tdElemArr[0].innerText = index+2;
+        //     tdElemArr[1].innerText = value; 
+        //     document.querySelector('#tableIncome tr:last-child').before(trElemLastIncome);
+        // }
         document.getElementById('buttonDeleteJobIncome').style.display='inline-block';
         moveTables('down',1)
         calcTableTime();
@@ -417,6 +443,64 @@ window.addEventListener('load',function(event){
     document.getElementById('buttonFormCancelJobIncome').addEventListener('click', function(e){
         e.preventDefault();
         formNewJobIncome.style.display="none";
+    })
+
+    document.getElementById('buttonDownloadFile').addEventListener('click', function(e){
+        e.preventDefault();
+
+
+        let dataInput=document.getElementById("formOptions");
+
+        let firstIncome=dataInput.firstIncome.value;
+        //tableIncome.getElementsByClassName('income')[0].innerText=value;
+
+        summCashCashion=Number(dataInput.summCashCashion.value);
+
+        multCashCashion=Number(dataInput.flowInCashCashion.value) / 100;
+
+        let priceFirstActive=dataInput.firstActivePrice.value;
+        ////tableActives.getElementsByClassName('priceActive')[0].innerText=value;
+      
+        let incomeFirstActive=dataInput.firstActiveIncome.value;
+        // tableActives.getElementsByClassName('incomeActive')[0].innerText=value;
+
+        multDeedMoneyX=Number(dataInput.flowCaseX.value) / 100;
+
+        deferredToCashCashion=Number(dataInput.flowInCashCashion.value);
+        let dataOption={
+            firstIncome: firstIncome,
+            summCashCashion: summCashCashion,
+            priceFirstActive: priceFirstActive,
+            incomeFirstActive: incomeFirstActive,
+            multCashCashion: multCashCashion,
+            multDeedMoneyX: multDeedMoneyX,
+        }
+        let incomeElems=tableIncome.getElementsByClassName('income');
+        let incomeArr=[];
+        for (let i=0;i<incomeElems.length;i++)
+        {
+            incomeArr.push(incomeElems[i].innerText);
+        }
+            // console.log(incomeElems);
+            // if (Math.trunc(i/12)<incomeElems.length)
+            // {
+            //     let income=incomeElems[Math.trunc(i/12)].innerText;//Math.trunc(i/12)
+            //     jobMoneyFlow=Number(income);
+            
+            // }
+        
+        dataSave={
+            option: dataOption,
+            incomeArr: incomeArr,
+            activesArr: activesArr,
+        }
+        downloadAsFile(JSON.stringify(dataSave));
+
+    })
+    document.getElementById('buttonReadFile').addEventListener('click',(e)=>{
+        e.preventDefault();
+        document.getElementById('formFile').style.display='block';
+        document.querySelector('body').style.overflowY=hidden;
     })
     valueInputArr=[
         {num:0, value: 3000},
@@ -480,7 +564,7 @@ window.addEventListener('load',function(event){
 
         }
     }
-    setInterval(function () {
+    // setInterval(function () {
     
         for (let i = 0; i < inputArr.length;i++)
         {
@@ -513,9 +597,10 @@ window.addEventListener('load',function(event){
         
         
         }
-    },10)
+    // },10)
     function calcInvestIncome(tdList, activesArr)
     {
+        investMoneyFlow = 0;
         for (let i=0;i<10;i++)
         {
             if (i<activesArr.length)
@@ -562,6 +647,7 @@ window.addEventListener('load',function(event){
         let tableResults=document.getElementById('tableResults');
         // console.log(tableActives.offsetHeight);
         let maxTop=max(tableIncome.offsetHeight, tableActives.offsetHeight).value;
+        let heightTableTime = tableByTime.offsetHeight;
         // let maxIndex=max(tableIncome.offsetHeight, tableActives.offsetHeight).index;
         // if ((maxTop > 150) && (maxIndex==null || numTable==maxIndex ))
         // {
@@ -583,13 +669,27 @@ window.addEventListener('load',function(event){
         {    
             topTableResults = maxTop+180;
             topTableTime = maxTop+390;
-            heightBody = maxTop+2180;
+            heightBody = heightTableTime + maxTop + 600;//maxTop+2180;
         }
         tableTime.style.top = topTableTime+'px';
         tableResults.style.top = topTableResults+'px';
        // let heightBody=document.body.offsetHeight + ;
         document.querySelector("body").style.minHeight = heightBody+'px';
     }
+    // function clearTablesIncomeAndActive()
+    // {
+
+    //     // tableActives
+    //     while (tableActives.children.length>1)
+    //     {
+    //         tableActives.removeChild(tableActives.lastChild);
+    //     }
+    //     // tableIncome
+    //     while (tableIncome.children.length>1)
+    //     {
+    //         tableIncome.removeChild(tableIncome.lastChild);
+    //     }
+    // }
     function max(val1, val2)
     {
         if (val1 >= val2)
@@ -605,4 +705,241 @@ window.addEventListener('load',function(event){
         //     return {value: null, index: null};;
         // }
     }
+    function handleFiles()
+    {
+        var form=document.getElementById('formFile');
+        
+        var fileOne=file.files[0];
+        //console.log(fileOne);
+        //objMap.loadMap(JSON.parse(localStorage.getItem('gameMap')));
+        //   alert(readFile(file));
+        var reader = new FileReader();
+        reader.readAsText(fileOne);
+        reader.onload = function() {
+            console.log(reader.result);
+            clearTablesIncomeAndActive();
+            clearTableTime();
+            appropriationFormFile(JSON.parse(reader.result));
+            calcTableTime();
+            moveTables();
+            document.querySelector('body').style.overflowY='auto';
+            // getDataLevel(JSON.parse(reader.result));
+            // flagPanzerLoad = true;
+            // uploadLevelOrRestart(2);
+            
+            // objMap.loadMap(JSON.parse(reader.result));
+            //  alert(reader.result);
+        }
+        reader.onerror = function() {
+        
+            alert('ошибка загрузки данных');
+        }
+        //;
+        file.value="";
+        form.style.display='none';
+    //     this.form.reset;
+    }
 })
+function clearTablesIncomeAndActive()
+{
+
+    // tableActives
+    console.log(tableByTime);
+    console.log(tableActives);
+
+    
+    //while (tableActives.tbody.children.length>1)
+    for (let i=tableActives.rows.length-2;i>1;i--)
+    {
+        //tableActives.tbody.removeChild(tableActives.tbody.lastChild);
+        tableActives.deleteRow(i);
+    }
+    // tableIncome
+    for (let i=tableIncome.rows.length-2;i>1;i--)
+    {
+        //tableActives.tbody.removeChild(tableActives.tbody.lastChild);
+        tableIncome.deleteRow(i);
+    }
+}
+function insertIncome(tableJobIncome,value)
+{
+
+    let trElemArr = document.querySelectorAll('.trIncome')
+    
+    let index = tableJobIncome.rows.length-3;//children.length-1;
+    countYearJob=index+2;
+    console.log(index, countYearJob);
+    let trElemLastIncome =  trElemArr[index].cloneNode(true);
+    let tdElemArr = trElemLastIncome.querySelectorAll('td');
+    tdElemArr[0].innerText = index+2;
+    tdElemArr[1].innerText = value; 
+    document.querySelector('#tableIncome tr:last-child').before(trElemLastIncome);
+}
+function addActive(price, income)
+{
+
+
+    let trElemArr = document.querySelectorAll('.trActive')
+    let index = trElemArr.length-1;
+    console.log(index);
+    let trElemLastActive =  trElemArr[index].cloneNode(true);
+    console.log(trElemLastActive);
+    let tdElemArr = trElemLastActive.querySelectorAll('td');
+    tdElemArr[0].innerText = index+2;
+    // tdElemArr[2].innerText = Number(document.getElementById('priceActiveInForm').value);
+    
+    // tdElemArr[3].innerText = Number(document.getElementById('incomeActiveInForm').value);
+    tdElemArr[2].innerText = Number(price);
+    tdElemArr[3].innerText = Number(income);
+    console.log(trElemLastActive);
+
+// tableActives.appendChild(trElemLastActive);
+
+// btnNewActives.before(trElemLastActive);
+    document.querySelector('#tableActives tr:last-child').before(trElemLastActive);
+    // activNew=JSON.parse(JSON.stringify(active));
+    // activNew={price: price,
+    //           income: income
+    //     }
+    // activesArr.push(activNew);
+    return index;
+}
+function appropriationFormFile(data)
+{
+
+    // let dataOption={
+    //     firstIncome: firstIncome,
+    //     summCashCashion: summCashCashion,
+    //     priceFirstActive: priceFirstActive,
+    //     incomeFirstActive: incomeFirstActive,
+    //     multCashCashion: multCashCashion,
+    //     multDeedMoneyX: multDeedMoneyX,
+    // }
+
+
+    let dataInput=document.getElementById("formOptions");
+
+    let value=data.option.firstIncome;//dataInput.firstIncome.value;
+    tableIncome.getElementsByClassName('income')[0].innerText=value;
+
+    summCashCashion=Number(data.option.summCashCashion);
+
+    multCashCashion=Number(data.option.multCashCashion) ;
+
+    value=data.option.priceFirstActive;//ataInput.firstActivePrice.value;
+    tableActives.getElementsByClassName('priceActive')[0].innerText=value;
+    
+    value=data.option.incomeFirstActive//dataInput.firstActiveIncome.value;
+    tableActives.getElementsByClassName('incomeActive')[0].innerText=value;
+
+    multDeedMoneyX=Number(data.option.multDeedMoneyX);
+    
+    
+    document.querySelector("#formOptions #firstIncome").value=data.option.firstIncome;
+    document.querySelector("#formOptions #summCashCashion").value=data.option.summCashCashion;
+
+    value=data.option.priceFirstActive;
+    document.querySelector("#formOptions #firstActivePrice").value=value;
+     document.querySelector("#tableActives .priceActive").innerHTML=value;
+
+    value=data.option.incomeFirstActive
+    document.querySelector("#formOptions #firstActiveIncome").value=value;
+    document.querySelector("#tableActives .incomeActive").innerHTML=value;
+
+    value=Math.trunc(data.option.multDeedMoneyX * 100);
+    document.querySelector("#formOptions #flowCaseX").value=value;
+    value=Math.trunc(data.option.multCashCashion * 100);
+    document.querySelector("#formOptions #flowInCashCashion").value=value
+
+    
+    
+    
+    let tableJobIncome=document.getElementById('tableIncome');
+    for (let i=1;i<data.incomeArr.length;i++)
+    {
+        insertIncome(tableJobIncome,Number(data.incomeArr[i]));
+    }
+    if (data.incomeArr.length > 0)
+    {
+        document.getElementById('buttonDeleteJobIncome').style.display='inline-block';
+    }
+    let index=null;
+    //activesArr=[];
+    for (let i=1;i<data.activesArr.length;i++)
+    {
+        index=addActive(Number(data.activesArr[i].price), Number(data.activesArr[i].income))
+        // activNew=JSON.parse(JSON.stringify(active));
+        // activNew={price: Number(data.activesArr[i].price),
+        //           income: Number(data.activesArr[i].income)
+        //         };
+        // activesArr.push(activNew)
+        //activesArr.push(Number(data.activesArr[i].price), Number(data.activesArr[i].income))
+    }   
+    if (data.activesArr.length > 0)
+    {
+        buttonDeleteActives.style.display='inline-block';
+    }
+        // if (countActives >= maxCountActives)
+        // {
+        //     btnNewActives.style.display ='none';
+        // }
+    if (data.activesArr.length >= maxCountActives-1)
+    {
+        btnNewActives.style.display='none';
+    }
+
+    //insertIncome(tableJobIncome,123456);
+
+    //deferredToCashCashion=Number(data.option.);
+}
+function downloadAsFile(data) 
+{
+      let a = document.createElement("a");
+      let file = new Blob([data], {type: 'application/json'});
+      a.href = URL.createObjectURL(file);
+      a.download = "finans-plan.txt";
+      a.click();
+}
+// var file = document.getElementById('fileInput');
+// file.addEventListener("change", handleFiles);
+// function handleFiles()
+// {
+//     var form=document.getElementById('formFile');
+    
+//     var fileOne=file.files[0];
+//     //console.log(fileOne);
+//     //objMap.loadMap(JSON.parse(localStorage.getItem('gameMap')));
+//     //   alert(readFile(file));
+//     var reader = new FileReader();
+//     reader.readAsText(fileOne);
+//     reader.onload = function() {
+//         console.log(reader.result);
+//         clearTableTime();
+//         appropriationFormFile(JSON.parse(reader.result));
+//         // getDataLevel(JSON.parse(reader.result));
+//         // flagPanzerLoad = true;
+//         // uploadLevelOrRestart(2);
+        
+//         // objMap.loadMap(JSON.parse(reader.result));
+//         //  alert(reader.result);
+//     }
+//     reader.onerror = function() {
+    
+//         alert('ошибка загрузки данных');
+//     }
+//     //;
+//     file.value="";
+//     form.style.display='none';
+// //     this.form.reset;
+// }
+function readFile(object)
+{
+  var file = object.files[0]
+  var reader = new FileReader()
+  var res;
+  reader.onload = function() {
+    res = reader.result;
+  }
+  reader.readAsText(file);
+  return res;
+}
