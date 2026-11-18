@@ -42,7 +42,7 @@ window.addEventListener('load',function(event){
 
 
     var btnDeleleActives=document.getElementById('buttonDeleteActives');
-    btnNewActives=document.getElementById('buttonNewActives');
+    var btnNewActives=document.getElementById('buttonNewActives');
     var btnNewJobIncome=document.getElementById('buttonNewJobIncome');
 
     var btnFormAddActive=document.getElementById('buttonFormAddActive');
@@ -64,8 +64,7 @@ window.addEventListener('load',function(event){
 
     let activesElemsPrice=tableActives.getElementsByClassName('priceActive');
     let activesElemsIncome=tableActives.getElementsByClassName('incomeActive');
-    // cloneColumnZero.style.display='none';
-    // clearTableTime();
+
     file = document.getElementById('fileInput');
     file.addEventListener("change", handleFiles);
     calcTableTime();
@@ -73,9 +72,9 @@ window.addEventListener('load',function(event){
     function clearTableTime()
     {
         //tableTime.replaceChildren();
-        while (tableByTime.children.length>1)
+        while (tableTime.children.length>1)
         {
-            tableByTime.removeChild(tableByTime.lastChild);
+            tableTime.removeChild(tableTime.lastChild);
         }
 
         countActives=0;
@@ -97,10 +96,7 @@ window.addEventListener('load',function(event){
         {
             activesMonthYear[i].innerText='Недостачно средств.'
         }
-        // for (let i=0;i<countMounth;i++)
-        // {
-        //     tdList[i].remove();
-        // }
+      
     }
     function calcTableTime()
     {
@@ -115,13 +111,12 @@ window.addEventListener('load',function(event){
         function calcBodyHeight(tableTime)
         {
             let heightBody=document.body.offsetHeight;
-      //      let tableTime=document.getElementById('tableByTime');
+      
             let tableActives=document.getElementById('tableActives');
             let tableIncome=document.getElementById('tableIncome')
-    //        let tableResults=document.getElementById('tableResults');
-        // console.log(tableActives.offsetHeight);
+   
             let maxTop=max(tableIncome.offsetHeight, tableActives.offsetHeight).value;
-            // tableTime=document.getElementById('tableByTime');
+      
             heightBody = tableTime.offsetHeight+maxTop+700;
             document.querySelector("body").style.minHeight = heightBody+'px'
         }
@@ -129,11 +124,6 @@ window.addEventListener('load',function(event){
         {
             countMounth=countYearJob * 12;
 
-            //calcBodyHeight()
-            // let heightBody=document.body.offsetHeight;
-            // let tableTime=document.getElementById('tableByTime');
-            // heightBody = tableTime.offsetHeight+500;
-            // document.querySelector("body").style.minHeight = heightBody+'px'
         }
         else
         {
@@ -169,14 +159,7 @@ window.addEventListener('load',function(event){
             tdList[3].innerText=moneyFlow; //     денежный поток
             investMoneyFlow = 0;
             deferredToCapital=0;
-            // for (let i=0;i<10;i++)
-            // {
-            //     if (i<activesArr.length)
-            //     {
-            //         tdList[9+i].innerText=activesArr[i].income;
-            //         investMoneyFlow += Number(activesArr[i].income);
-            //     }
-            // }
+    
             investMoneyFlow = calcInvestIncome(tdList, activesArr)
             moneyFlow=investMoneyFlow+jobMoneyFlow;
             if (i==0)
@@ -208,10 +191,10 @@ window.addEventListener('load',function(event){
 
                 tdList[6].innerText=moneyFlow; 
             }
-            // tdList[4].innerText=moneyFlow - deedMoneyX - deferredToCashCashion; //отложено в капитал
+           
             tdList[5].innerText=capital;       // капитал
             
-            // tdList[6].innerText=deferredToCashCashion //отложено в падушку
+          
             
             tdList[7].innerText=cashCashion // подушка
             tdList[8].innerText=0// остаток
@@ -223,23 +206,8 @@ window.addEventListener('load',function(event){
 
             // ACTIVES
 
-            //let activesElemsPrice=tableActives.getElementsByClassName('priceActive');
-          //  let activesElemsIncome=tableActives.getElementsByClassName('incomeActive');
-
-
-            // console.log(tableActives);
-            // console.log(activesElemsPrice);
-            // console.log(activesElemsIncome);
-
-
-            // let priceActive=Number(activesElemsPrice[countActives].innerHTML);
-            // let incomeActive=Number(activesElemsIncome[countActives].innerHTML);
             if (countActives >= activesElemsPrice.length)
             {
-                // infestIncole=calcInvestIncome(tdList, activesArr);
-                // moneyFlow=investMoneyFlow+jobMoneyFlow;
-
-                // tdLIst[4]=moneyFlow;
                 tableTime.appendChild(cloneColumnZero);
                 continue;
             }
@@ -247,17 +215,12 @@ window.addEventListener('load',function(event){
             let incomeActive=Number(activesElemsIncome[countActives].innerHTML);
             if (priceActive < capital)
             {
-                // activesElems[countActives].innerText=
+                
                 capital -= priceActive;
                 tdList[9+10].innerText='Activ '+(countActives+1);
                 tdList[9+11].innerText=priceActive;
 
-                // infestIncole=calcInvestIncome(tdList, activesArr);
-                // moneyFlow=investMoneyFlow+jobMoneyFlow;
-
-                // tdLIst[4]=moneyFlow;
-
-                activNew=JSON.parse(JSON.stringify(active));
+                let activNew=JSON.parse(JSON.stringify(active));
                 activNew={price: priceActive, income: incomeActive};
                 activesArr.push(activNew)
                 let monthYearValue = tdList[1].innerHTML;
@@ -266,7 +229,6 @@ window.addEventListener('load',function(event){
                 {
                     countActives++;
                 }
-            //continue;
             }
             
             tableTime.appendChild(cloneColumnZero);
@@ -290,54 +252,19 @@ window.addEventListener('load',function(event){
         valuePrice = Number(document.getElementById('priceActiveInForm').value);
         valueIncome = Number(document.getElementById('incomeActiveInForm').value)
         let index=addActive(valuePrice, valueIncome);
-        // function addActive(price, income)
-        // {
-
-        
-        //     let trElemArr = document.querySelectorAll('.trActive')
-        //     let index = trElemArr.length-1;
-        //     console.log(index);
-        //     let trElemLastActive =  trElemArr[index].cloneNode(true);
-        //     console.log(trElemLastActive);
-        //     let tdElemArr = trElemLastActive.querySelectorAll('td');
-        //     tdElemArr[0].innerText = index+2;
-        //     // tdElemArr[2].innerText = Number(document.getElementById('priceActiveInForm').value);
-            
-        //     // tdElemArr[3].innerText = Number(document.getElementById('incomeActiveInForm').value);
-        //     tdElemArr[2].innerText = Number(price);
-        //     tdElemArr[3].innerText = Number(income);
-        //     console.log(trElemLastActive);
-
-        // // tableActives.appendChild(trElemLastActive);
-
-        // // btnNewActives.before(trElemLastActive);
-        //     document.querySelector('#tableActives tr:last-child').before(trElemLastActive);
-        //     return index;
-        // }
-        // trElemLastActive.before
-
         clearTableTime();
         moveTables('down', 2);
         calcTableTime();
 
-        // let heightBody=document.body.offsetHeight;
-        // topTableTime += 30;
-        // heightBody += 30;
-        // tableTime.style.top = topTableTime+'px';
-
-        // document.querySelector("body").style.minHeight = heightBody+'px';
-        // document.querySelector("footer").style.top="calc(100% - 150px)";
-        // document.querySelector("footer").style.bottom="100%";
 
         formNewActive.style.display='none';
 
         //!!!
-        buttonDeleteActives.style.display='inline-block';
+        //btnDeleteActives.style.display='inline-block';
+        document.getElementById("buttonDeleteActives").style.display='inline-block';
+
         
-        // if (countActives >= maxCountActives)
-        // {
-        //     btnNewActives.style.display ='none';
-        // }
+    
         if (index + 2 >= maxCountActives)
         {
             btnNewActives.style.display='none';
@@ -402,20 +329,6 @@ window.addEventListener('load',function(event){
 
         let value=dataInput.incomeJobInForm.value;
         insertIncome(tableJobIncome,value)
-        // function insertIncome(tableJobIncome,value)
-        // {
-
-        //     let trElemArr = document.querySelectorAll('.trIncome')
-            
-        //     let index = tableJobIncone.rows.length-3;//children.length-1;
-        //     countYearJob=index+2;
-        //     console.log(index, countYearJob);
-        //     let trElemLastIncome =  trElemArr[index].cloneNode(true);
-        //     let tdElemArr = trElemLastIncome.querySelectorAll('td');
-        //     tdElemArr[0].innerText = index+2;
-        //     tdElemArr[1].innerText = value; 
-        //     document.querySelector('#tableIncome tr:last-child').before(trElemLastIncome);
-        // }
         document.getElementById('buttonDeleteJobIncome').style.display='inline-block';
         moveTables('down',1)
         calcTableTime();
@@ -424,14 +337,6 @@ window.addEventListener('load',function(event){
     })
     document.getElementById('buttonDeleteJobIncome').addEventListener('click', function(e){
         e.preventDefault();
-        // const table = document.getElementById('tableIncome');
-        // let index= table.querySelectorAll('tr').length-2; 
-        // table.deleteRow(index);
-        // if (index <= 2)
-        // {
-        //     document.getElementById('buttonDeleteJobIncome').style.display='none';    
-        // }
-
         const table = document.getElementById('tableIncome');
         let index= table.querySelectorAll('tr').length-2; 
         console.log(index)
@@ -446,14 +351,6 @@ window.addEventListener('load',function(event){
         moveTables('up',1)
         calcTableTime();
         countYearJob--;
-        // if (countActives < maxCountActives)
-        // {
-        //     btnNewActives.style.display='inline-block';
-        // }
-
-
-
-
     })
     document.getElementById('buttonFormCancelJobIncome').addEventListener('click', function(e){
         e.preventDefault();
@@ -496,13 +393,6 @@ window.addEventListener('load',function(event){
         {
             incomeArr.push(incomeElems[i].innerText);
         }
-            // console.log(incomeElems);
-            // if (Math.trunc(i/12)<incomeElems.length)
-            // {
-            //     let income=incomeElems[Math.trunc(i/12)].innerText;//Math.trunc(i/12)
-            //     jobMoneyFlow=Number(income);
-            
-            // }
         
         dataSave={
             offsetMounthYear: offsetMounthYear,
@@ -513,11 +403,7 @@ window.addEventListener('load',function(event){
         downloadAsFile(JSON.stringify(dataSave));
 
     })
-    // var yearInput=document.getElementById('yearInput');
-    // var mounthSelect=document.getElementById('mounthSelect');
-    // yearInput.addEventListener('change',function(e){
-
-    // })
+  
     
     
     offsetMounthYear
@@ -547,54 +433,31 @@ window.addEventListener('load',function(event){
     setInterval(function () {
         for (let i = 0; i < inputArr.length; i++)
         {
-            //for (let j = 0; j < valueInputArr.length;j++)
+            if (( Number(inputArr[i].value) > 99 && (i==5 || i==6 ))) 
             {
-            
-                
-                //if (i==valueInputArr[j].num)
-                // console.log(inputArr[i]);
-                if (//(Number(inputArr[i].value) < valueInputArr[j].value && i<=3 ) || 
-                    // (i<=3)
-                    //  ||
-                    ( Number(inputArr[i].value) > 99 && (i==5 || i==6 )
-                )) 
+                inputArr[i].style.color = "red";
+               // console.log('inputArr[i].value='+inputArr[i].value);
+            } 
+            else
+            {
+                inputArr[i].style.color = "black";
+            }
+     
+            if (i==0)
+            {   
+                if ( 
+                    (Number(inputArr[i].value) < 2000 ||
+                    Number(inputArr[i].value) > 10000)
+                    )
                 {
                     inputArr[i].style.color = "red";
-
-                   // inputArr[i].style.color = "red";
-
-                    console.log('inputArr[i].value='+inputArr[i].value);
-                } 
+                }
                 else
                 {
                     inputArr[i].style.color = "black";
                 }
-                // if (//(Number(inputArr[i].value) < valueInputArr[j].value && i<=3 ) || 
-                //     // (i<=3)
-                //     //  ||
-                //     ( Number(inputArr[i].value) < 99 && (i==6 ))) 
-                // {
-                //     inputArr[i].style.color = "red";
-                // } 
-                // else
-                // {
-                //     inputArr[i].style.color = "black";
-                // }
-                if (i==0)
-                {   
-                    if ( 
-                        (Number(inputArr[i].value) < 2000 ||
-                        Number(inputArr[i].value) > 10000)
-                        )
-                    {
-                        inputArr[i].style.color = "red";
-                    }
-                    else
-                    {
-                        inputArr[i].style.color = "black";
-                    }
-                }
             }
+            
         
         }
     }, 16);
@@ -606,13 +469,10 @@ window.addEventListener('load',function(event){
             {
 
                 if (i == valueInputArr[j].num)
-                if (//(Number(inputArr[i].value) < valueInputArr[j].value && i<=3 )||
-                   // i<=3 ||
-                    (Number(inputArr[i].value) > 99 && (i==5  || i==6))
-                    ||
-                    inputArr[i].value == '' //|| 
-                   // inputArr[i].value.length > 2
-                ) 
+                if ((Number(inputArr[i].value) > 99 && (i==5  || i==6))
+                       ||
+                       inputArr[i].value == ''  
+                    ) 
 
                 {
                     inputArr[i].value = valueInputArr[j].value;
@@ -628,49 +488,43 @@ window.addEventListener('load',function(event){
                         inputArr[i].value = valueInputArr[j].value;
                         //inputArr[i].style.color = "red";
                     }
-                    // else
-                    // {
-                    //     inputArr[i].style.color = "black";
-                    // }
                 }
             }
 
         }
     }
-    // setInterval(function () {
-    
-        for (let i = 0; i < inputArr.length;i++)
-        {
 
-            //inputArr[i].oninput = e => 
-            inputArr[i].oninput = function (e) {
-                console.log(inputArr[9]);
-                console.log(e.target.value);
-                if(i==9)
-                {
-                    {       
-                        if (inputArr[i].value.match("^0+")) 
-                        {   
-                            inputArr[i].value = '0';
-                        }
-                        e.target.value = e.target.value.replace(/\D/g, '');
-                    }
-                }
-                else
-                {
-                //if (inputArr[i].value == '0') inputArr[i].value = '';
-                    e.target.value = e.target.value.replace(/^0/, ''); 
-                    e.target.value = e.target.value.replace(/\D/g, '');
+    
+    for (let i = 0; i < inputArr.length;i++)
+    {
+
+        inputArr[i].oninput = function (e) {
+            console.log(inputArr[9]);
+            console.log(e.target.value);
+            if(i==9)
+            {
+                {       
                     if (inputArr[i].value.match("^0+")) 
-                    {
-                        inputArr[i].value = '';
+                    {   
+                        inputArr[i].value = '0';
                     }
+                    e.target.value = e.target.value.replace(/\D/g, '');
                 }
             }
-        
-        
+            else
+            {
+                e.target.value = e.target.value.replace(/^0/, ''); 
+                e.target.value = e.target.value.replace(/\D/g, '');
+                if (inputArr[i].value.match("^0+")) 
+                {
+                    inputArr[i].value = '';
+                }
+            }
         }
-    // },10)
+    
+    
+    }
+
     function calcInvestIncome(tdList, activesArr)
     {
         investMoneyFlow = 0;
@@ -721,57 +575,20 @@ window.addEventListener('load',function(event){
         // console.log(tableActives.offsetHeight);
         let maxTop=max(tableIncome.offsetHeight, tableActives.offsetHeight).value;
         let heightTableTime = tableByTime.offsetHeight;
-        // let maxIndex=max(tableIncome.offsetHeight, tableActives.offsetHeight).index;
-        // if ((maxTop > 150) && (maxIndex==null || numTable==maxIndex ))
-        // {
-        //     if (vector=='down')
-        //     {
-                
-        //         topTableResults += 30;
-        //         topTableTime += 30;
-        //         heightBody += 30;
-        //     }
-        //     if (vector=='up')
-        //     {
-        //         topTableResults -= 30;
-        //         topTableTime -= 30;
-        //         heightBody -= 30;
-        //     }
-        // }
         if (maxTop > 150)
         {    
             topTableResults = maxTop+180;
-            topTableTime = maxTop+390;
-            heightBody = heightTableTime + maxTop + 600;//maxTop+2180;
+            topTableTime = maxTop+590;
+            heightBody = heightTableTime + maxTop + 630;//maxTop+2180;
         }
         tableTime.style.top = topTableTime+'px';
         if (topTableResults >= 330)
         {
             tableResults.style.left = 770+'px';//topTableResults+'px';
-            tableResults.style.top=  380+'px';
+            tableResults.style.top=  390+'px';
         }
-        // else
-        // {
-        //      tableResults.style.left = 50+'px';//topTableResults+'px';
-        //  //   tableResults.style.top=  330+'px';
-        // }
-       // let heightBody=document.body.offsetHeight + ;
         document.querySelector("body").style.minHeight = heightBody+'px';
     }
-    // function clearTablesIncomeAndActive()
-    // {
-
-    //     // tableActives
-    //     while (tableActives.children.length>1)
-    //     {
-    //         tableActives.removeChild(tableActives.lastChild);
-    //     }
-    //     // tableIncome
-    //     while (tableIncome.children.length>1)
-    //     {
-    //         tableIncome.removeChild(tableIncome.lastChild);
-    //     }
-    // }
     function max(val1, val2)
     {
         if (val1 >= val2)
@@ -782,19 +599,12 @@ window.addEventListener('load',function(event){
         {
             return {value: val2, index: 2};
         }
-        // if (val1 == val2)
-        // {
-        //     return {value: null, index: null};;
-        // }
     }
     function handleFiles()
     {
         var form=document.getElementById('formFile');
         
         var fileOne=file.files[0];
-        //console.log(fileOne);
-        //objMap.loadMap(JSON.parse(localStorage.getItem('gameMap')));
-        //   alert(readFile(file));
         var reader = new FileReader();
         reader.readAsText(fileOne);
         reader.onload = function() {
@@ -805,21 +615,15 @@ window.addEventListener('load',function(event){
             calcTableTime();
             moveTables();
             document.querySelector('body').style.overflowY='visible';
-            // getDataLevel(JSON.parse(reader.result));
-            // flagPanzerLoad = true;
-            // uploadLevelOrRestart(2);
-            
-            // objMap.loadMap(JSON.parse(reader.result));
-            //  alert(reader.result);
+       
         }
         reader.onerror = function() {
         
             alert('ошибка загрузки данных');
         }
-        //;
         file.value="";
         form.style.display='none';
-    //     this.form.reset;
+
     }
 })
 function clearTablesIncomeAndActive()
@@ -828,18 +632,14 @@ function clearTablesIncomeAndActive()
     // tableActives
     console.log(tableByTime);
     console.log(tableActives);
-
-    
-    //while (tableActives.tbody.children.length>1)
     for (let i=tableActives.rows.length-2;i>1;i--)
     {
-        //tableActives.tbody.removeChild(tableActives.tbody.lastChild);
+      
         tableActives.deleteRow(i);
     }
-    // tableIncome
     for (let i=tableIncome.rows.length-2;i>1;i--)
     {
-        //tableActives.tbody.removeChild(tableActives.tbody.lastChild);
+ 
         tableIncome.deleteRow(i);
     }
 }
@@ -868,22 +668,10 @@ function addActive(price, income)
     console.log(trElemLastActive);
     let tdElemArr = trElemLastActive.querySelectorAll('td');
     tdElemArr[0].innerText = index+2;
-    // tdElemArr[2].innerText = Number(document.getElementById('priceActiveInForm').value);
-    
-    // tdElemArr[3].innerText = Number(document.getElementById('incomeActiveInForm').value);
     tdElemArr[2].innerText = Number(price);
     tdElemArr[3].innerText = Number(income);
     console.log(trElemLastActive);
-
-// tableActives.appendChild(trElemLastActive);
-
-// btnNewActives.before(trElemLastActive);
     document.querySelector('#tableActives tr:last-child').before(trElemLastActive);
-    // activNew=JSON.parse(JSON.stringify(active));
-    // activNew={price: price,
-    //           income: income
-    //     }
-    // activesArr.push(activNew);
     return index;
 }
 function appropriationFormFile(data)
@@ -956,30 +744,16 @@ function appropriationFormFile(data)
     //activesArr=[];
     for (let i=1;i<data.activesArr.length;i++)
     {
-        index=addActive(Number(data.activesArr[i].price), Number(data.activesArr[i].income))
-        // activNew=JSON.parse(JSON.stringify(active));
-        // activNew={price: Number(data.activesArr[i].price),
-        //           income: Number(data.activesArr[i].income)
-        //         };
-        // activesArr.push(activNew)
-        //activesArr.push(Number(data.activesArr[i].price), Number(data.activesArr[i].income))
+        index=addActive(Number(data.activesArr[i].price), Number(data.activesArr[i].income));
     }   
     if (data.activesArr.length > 0)
     {
         buttonDeleteActives.style.display='inline-block';
     }
-        // if (countActives >= maxCountActives)
-        // {
-        //     btnNewActives.style.display ='none';
-        // }
     if (data.activesArr.length >= maxCountActives-1)
     {
         btnNewActives.style.display='none';
     }
-
-    //insertIncome(tableJobIncome,123456);
-
-    //deferredToCashCashion=Number(data.option.);
 }
 function downloadAsFile(data) 
 {
@@ -989,38 +763,6 @@ function downloadAsFile(data)
       a.download = "finans-plan.txt";
       a.click();
 }
-// var file = document.getElementById('fileInput');
-// file.addEventListener("change", handleFiles);
-// function handleFiles()
-// {
-//     var form=document.getElementById('formFile');
-    
-//     var fileOne=file.files[0];
-//     //console.log(fileOne);
-//     //objMap.loadMap(JSON.parse(localStorage.getItem('gameMap')));
-//     //   alert(readFile(file));
-//     var reader = new FileReader();
-//     reader.readAsText(fileOne);
-//     reader.onload = function() {
-//         console.log(reader.result);
-//         clearTableTime();
-//         appropriationFormFile(JSON.parse(reader.result));
-//         // getDataLevel(JSON.parse(reader.result));
-//         // flagPanzerLoad = true;
-//         // uploadLevelOrRestart(2);
-        
-//         // objMap.loadMap(JSON.parse(reader.result));
-//         //  alert(reader.result);
-//     }
-//     reader.onerror = function() {
-    
-//         alert('ошибка загрузки данных');
-//     }
-//     //;
-//     file.value="";
-//     form.style.display='none';
-// //     this.form.reset;
-// }
 function readFile(object)
 {
   var file = object.files[0]

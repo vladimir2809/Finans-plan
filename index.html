@@ -8,6 +8,7 @@
     <style>
         html, body{
             min-height: 2300px;
+            min-width: 1200px;
             margin: 0;
             padding: 0;
         }
@@ -19,13 +20,14 @@
 
         main{
             flex-grow: 1;
+            width: 100%;
         }
         footer{
             position: relative;
             /* flex-grow: 1; */
             top: calc(100% - 150px);
             bottom: 100%;
-            width:100vh;
+            width:100%;
             height: 100px;
             /* margin-top: 40px; */
             background-color: aquamarine;
@@ -239,14 +241,9 @@
                 <td class="priceActive">60000</td>
                 <td class="incomeActive">3000</td>
             </tr>
-            <!-- <tr>
-                <td>2</td>
-                <td>январь/2001</td>
-                <td class="priceActive">60000</td>
-                <td class="incomeActive">3000</td>
-            </tr> -->
+
             <tr>
-                <!-- <button id="buttonDeleteActives">добавить</button>  -->
+
                 <td colspan="4"> 
                     <button id="buttonDeleteActives">Удалить</button> 
                     <button id="buttonNewActives">добавить</button> 
@@ -338,6 +335,9 @@
             </tr>
         </table>
     </main>
+     <form action="" id="formFile">
+        <input type="file" id="fileInput">
+    </form>
     <footer>
 
     </footer>
@@ -418,8 +418,6 @@
             <button id="buttonDownloadFile">Сохранить</button>
         </div>
     </form>
-    <form action="" id="formFile">
-        <input type="file" id="fileInput">
-    </form>
+  
 </html>
 
