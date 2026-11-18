@@ -8,8 +8,9 @@ var topTableResults=240;
 
 var maxCountActives=10;
 var countActives=0;
-var countYearJob=1;
 
+var countYearJob=1;
+var offsetMounthYear=0;
 var countMounth=60;
 
 var jobMoneyFlow=3000;
@@ -49,6 +50,10 @@ window.addEventListener('load',function(event){
     var formNewActive = document.getElementById("formNewActive");
     var formNewJobIncome =document.getElementById("formNewJobIncome");
 
+
+    var yearInput=document.getElementById('yearInput');
+    var mounthSelect=document.getElementById('mounthSelect');
+
     var inputArr = document.querySelectorAll('#formOptions input');
 
     var inputNewActives=document.querySelectorAll('#formNewActive input')
@@ -64,6 +69,7 @@ window.addEventListener('load',function(event){
     file = document.getElementById('fileInput');
     file.addEventListener("change", handleFiles);
     calcTableTime();
+    document.querySelector('body').style.overflowY='visible';
     function clearTableTime()
     {
         //tableTime.replaceChildren();
@@ -98,6 +104,14 @@ window.addEventListener('load',function(event){
     }
     function calcTableTime()
     {
+        function calcOffsetMountYear()
+        {
+            let mounth=Number(mounthSelect.value);
+            let year=Number(yearInput.value)
+            offsetMounthYear = mounth+(year - 2000)*12
+            return offsetMounthYear;
+        }
+        // alert(calcOffsetMountYear())
         function calcBodyHeight(tableTime)
         {
             let heightBody=document.body.offsetHeight;
@@ -147,9 +161,10 @@ window.addEventListener('load',function(event){
                 //tdList[3].innerText=moneyFlow; 
             }
             tdList[0].innerText=i+1; //номер
-            let year=2000+Math.trunc(i/12);
+            let offset=calcOffsetMountYear();
+            let year=2000+Math.trunc((i+offset)/12);
 
-            tdList[1].innerText=nameMonth[i % 12] +"/"+year; // время
+            tdList[1].innerText=nameMonth[(i+offset) % 12] +"/"+year; // время
             tdList[2].innerText=jobMoneyFlow;               //работа
             tdList[3].innerText=moneyFlow; //     денежный поток
             investMoneyFlow = 0;
@@ -490,6 +505,7 @@ window.addEventListener('load',function(event){
             // }
         
         dataSave={
+            offsetMounthYear: offsetMounthYear,
             option: dataOption,
             incomeArr: incomeArr,
             activesArr: activesArr,
@@ -497,10 +513,19 @@ window.addEventListener('load',function(event){
         downloadAsFile(JSON.stringify(dataSave));
 
     })
+    // var yearInput=document.getElementById('yearInput');
+    // var mounthSelect=document.getElementById('mounthSelect');
+    // yearInput.addEventListener('change',function(e){
+
+    // })
+    
+    
+    offsetMounthYear
+    
     document.getElementById('buttonReadFile').addEventListener('click',(e)=>{
         e.preventDefault();
         document.getElementById('formFile').style.display='block';
-        document.querySelector('body').style.overflowY=hidden;
+        document.querySelector('body').style.overflowY="hidden";
     })
     valueInputArr=[
         {num:0, value: 2000},
@@ -720,7 +745,16 @@ window.addEventListener('load',function(event){
             heightBody = heightTableTime + maxTop + 600;//maxTop+2180;
         }
         tableTime.style.top = topTableTime+'px';
-        tableResults.style.top = topTableResults+'px';
+        if (topTableResults >= 330)
+        {
+            tableResults.style.left = 770+'px';//topTableResults+'px';
+            tableResults.style.top=  380+'px';
+        }
+        // else
+        // {
+        //      tableResults.style.left = 50+'px';//topTableResults+'px';
+        //  //   tableResults.style.top=  330+'px';
+        // }
        // let heightBody=document.body.offsetHeight + ;
         document.querySelector("body").style.minHeight = heightBody+'px';
     }
@@ -770,7 +804,7 @@ window.addEventListener('load',function(event){
             appropriationFormFile(JSON.parse(reader.result));
             calcTableTime();
             moveTables();
-            document.querySelector('body').style.overflowY='auto';
+            document.querySelector('body').style.overflowY='visible';
             // getDataLevel(JSON.parse(reader.result));
             // flagPanzerLoad = true;
             // uploadLevelOrRestart(2);
@@ -867,7 +901,14 @@ function appropriationFormFile(data)
 
     let dataInput=document.getElementById("formOptions");
 
-    let value=data.option.firstIncome;//dataInput.firstIncome.value;
+
+    let value=Number(data.offsetMounthYear) % 12;
+    document.getElementById('mounthSelect').value=value+'';
+
+    value=2000+Math.trunc(Number(data.offsetMounthYear) / 12);
+    document.getElementById('yearInput').value=value;
+
+    value=data.option.firstIncome;//dataInput.firstIncome.value;
     tableIncome.getElementsByClassName('income')[0].innerText=value;
 
     summCashCashion=Number(data.option.summCashCashion);
