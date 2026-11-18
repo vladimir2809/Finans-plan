@@ -503,17 +503,18 @@ window.addEventListener('load',function(event){
         document.querySelector('body').style.overflowY=hidden;
     })
     valueInputArr=[
-        {num:0, value: 3000},
-        {num:1, value: 60000},
-        {num:2, value: 100000},
-        {num:3, value: 10000},
-        {num:4, value: 20},
+        {num:0, value: 2000},
+        {num:1, value: 3000},
+        {num:2, value: 60000},
+        {num:3, value: 100000},
+        {num:4, value: 10000},
         {num:5, value: 20},
+        {num:6, value: 20},
         // form new Active
-        {num:6, value: 10000},
-        {num:7, value: 1000},
+        {num:7, value: 10000},
+        {num:8, value: 1000},
         ///form job income
-        {num:8, value: 3000},
+        {num:9, value: 3000},
         
 
     ];
@@ -521,21 +522,52 @@ window.addEventListener('load',function(event){
     setInterval(function () {
         for (let i = 0; i < inputArr.length; i++)
         {
-            for (let j = 0; j < valueInputArr.length;j++)
+            //for (let j = 0; j < valueInputArr.length;j++)
             {
             
                 
-                if (i==valueInputArr[j].num)
+                //if (i==valueInputArr[j].num)
+                // console.log(inputArr[i]);
                 if (//(Number(inputArr[i].value) < valueInputArr[j].value && i<=3 ) || 
                     // (i<=3)
                     //  ||
-                    ( Number(inputArr[i].value) > 99 && (i==4  || i==5))) 
+                    ( Number(inputArr[i].value) > 99 && (i==5 || i==6 )
+                )) 
                 {
                     inputArr[i].style.color = "red";
+
+                   // inputArr[i].style.color = "red";
+
+                    console.log('inputArr[i].value='+inputArr[i].value);
                 } 
                 else
                 {
                     inputArr[i].style.color = "black";
+                }
+                // if (//(Number(inputArr[i].value) < valueInputArr[j].value && i<=3 ) || 
+                //     // (i<=3)
+                //     //  ||
+                //     ( Number(inputArr[i].value) < 99 && (i==6 ))) 
+                // {
+                //     inputArr[i].style.color = "red";
+                // } 
+                // else
+                // {
+                //     inputArr[i].style.color = "black";
+                // }
+                if (i==0)
+                {   
+                    if ( 
+                        (Number(inputArr[i].value) < 2000 ||
+                        Number(inputArr[i].value) > 10000)
+                        )
+                    {
+                        inputArr[i].style.color = "red";
+                    }
+                    else
+                    {
+                        inputArr[i].style.color = "black";
+                    }
                 }
             }
         
@@ -551,7 +583,7 @@ window.addEventListener('load',function(event){
                 if (i == valueInputArr[j].num)
                 if (//(Number(inputArr[i].value) < valueInputArr[j].value && i<=3 )||
                    // i<=3 ||
-                    (Number(inputArr[i].value) > 99 && (i==4  || i==5))
+                    (Number(inputArr[i].value) > 99 && (i==5  || i==6))
                     ||
                     inputArr[i].value == '' //|| 
                    // inputArr[i].value.length > 2
@@ -559,6 +591,22 @@ window.addEventListener('load',function(event){
 
                 {
                     inputArr[i].value = valueInputArr[j].value;
+                }
+                
+                if (i==0)
+                {   
+                    if ( 
+                        (Number(inputArr[i].value) < 2000 ||
+                        Number(inputArr[i].value) > 10000)//==false
+                        )
+                    {
+                        inputArr[i].value = valueInputArr[j].value;
+                        //inputArr[i].style.color = "red";
+                    }
+                    // else
+                    // {
+                    //     inputArr[i].style.color = "black";
+                    // }
                 }
             }
 
@@ -571,9 +619,9 @@ window.addEventListener('load',function(event){
 
             //inputArr[i].oninput = e => 
             inputArr[i].oninput = function (e) {
-                console.log(inputArr[8]);
+                console.log(inputArr[9]);
                 console.log(e.target.value);
-                if(i==8)
+                if(i==9)
                 {
                     {       
                         if (inputArr[i].value.match("^0+")) 
